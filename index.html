@@ -24,6 +24,9 @@
             }
         }
     </script>
+    <!-- Firebase SDK (Realtime Cloud Database) -->
+    <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
     <!-- SheetJS (Excel Parser & Generator) -->
     <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
     <!-- Font Awesome 6 -->
@@ -176,7 +179,7 @@
                         <div class="flex items-center gap-2">
                             <h1 class="text-lg font-extrabold text-white tracking-tight">Cluster Bumi Asri</h1>
                             <span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-emerald-950/90 text-brand-400 border border-brand-500/40 text-[10px] font-bold uppercase tracking-wider shadow-inner">
-                                <span class="w-1.5 h-1.5 rounded-full bg-brand-400 animate-pulse"></span> Gerbang Utama Aktif
+                                <span class="w-1.5 h-1.5 rounded-full bg-brand-400 animate-pulse"></span> Cloud Real-Time
                             </span>
                         </div>
                         <p class="text-xs text-slate-400 font-medium">Sistem Administrasi Warga & Keamanan Lingkungan</p>
@@ -349,13 +352,10 @@
 
             </section>
 
-            <!-- ================= TOOLBAR PENCARIAN & AKSI (DIPERBAIKI 100% TIDAK AKAN MENCIUT) ================= -->
+            <!-- TOOLBAR PENCARIAN & AKSI -->
             <div class="dark-glass-card p-5 rounded-3xl space-y-3.5 shadow-2xl border border-emerald-500/25">
                 
-                <!-- BARIS ATAS: KOTAK PENCARIAN PANJANG & FILTER (SANGAT LEGA) -->
                 <div class="flex items-center gap-3">
-                    
-                    <!-- INPUT PENCARIAN UTAMA DENGAN MIN-WIDTH PATEN -->
                     <div class="relative flex-1 min-w-[500px]">
                         <span class="absolute inset-y-0 left-0 pl-4 flex items-center text-emerald-400 pointer-events-none">
                             <i class="fa-solid fa-magnifying-glass text-base"></i>
@@ -367,7 +367,6 @@
                             class="w-full pl-12 pr-12 py-3 bg-slate-900/95 border-2 border-emerald-800/80 rounded-2xl text-sm font-semibold text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-brand-400 focus:border-brand-400 transition shadow-inner"
                             oninput="filterResidents()"
                         >
-                        <!-- Tombol Bersihkan Input (X) -->
                         <button 
                             type="button" 
                             id="clearSearchBtn" 
@@ -379,7 +378,6 @@
                         </button>
                     </div>
 
-                    <!-- Dropdown Filter Status -->
                     <div class="w-56 shrink-0">
                         <select id="filterStatus" onchange="filterResidents()" class="w-full px-3.5 py-3 bg-slate-900 border border-emerald-900/80 rounded-2xl text-xs font-bold text-slate-200 focus:outline-none focus:ring-2 focus:ring-brand-400 cursor-pointer">
                             <option value="Semua">🔍 Semua Status Hunian</option>
@@ -392,7 +390,6 @@
                         </select>
                     </div>
 
-                    <!-- Dropdown Filter Kendaraan -->
                     <div class="w-48 shrink-0">
                         <select id="filterKendaraan" onchange="filterResidents()" class="w-full px-3.5 py-3 bg-slate-900 border border-emerald-900/80 rounded-2xl text-xs font-bold text-slate-200 focus:outline-none focus:ring-2 focus:ring-brand-400 cursor-pointer">
                             <option value="Semua">🚗 Semua Kendaraan</option>
@@ -402,7 +399,6 @@
                     </div>
                 </div>
 
-                <!-- BARIS BAWAH: TOMBOL-TOMBOL AKSI & MANAJEMEN DATA -->
                 <div class="flex items-center justify-between pt-3 border-t border-slate-800/80">
                     <div class="flex items-center gap-2">
                         <span class="text-xs font-bold uppercase tracking-wider text-slate-400 mr-1 flex items-center gap-1.5">
@@ -459,7 +455,7 @@
                             </tr>
                         </thead>
                         <tbody id="residentTableBody" class="divide-y divide-slate-800/80">
-                            <!-- Render via JS -->
+                            <!-- Render via Firestore Real-Time -->
                         </tbody>
                     </table>
                 </div>
@@ -601,7 +597,7 @@
 
                 <div class="flex justify-end gap-2 pt-4 border-t border-slate-800">
                     <button type="button" onclick="closeModal()" class="px-4 py-2.5 border border-slate-700 hover:bg-slate-800 text-slate-300 rounded-xl text-xs font-bold transition">Batal</button>
-                    <button type="submit" id="modalSubmitBtn" class="px-5 py-2.5 bg-brand-600 hover:bg-brand-500 text-white rounded-xl text-xs font-bold shadow-md shadow-brand-500/20 transition">Simpan Data</button>
+                    <button type="submit" id="modalSubmitBtn" class="px-5 py-2.5 bg-brand-600 hover:bg-brand-500 text-white rounded-xl text-xs font-bold shadow-md shadow-brand-500/20 transition">Simpan ke Cloud</button>
                 </div>
             </form>
         </div>
@@ -651,7 +647,7 @@
                 </div>
 
                 <div class="space-y-2.5" id="securityListContainer">
-                    <!-- Render via JS -->
+                    <!-- Render via Firestore Real-Time -->
                 </div>
             </div>
 
@@ -663,40 +659,93 @@
     </div>
 
 
-    <!-- ================= JAVASCRIPT ================= -->
+    <!-- ================= JAVASCRIPT LENGKAP DENGAN FIREBASE REALTIME ================= -->
     <script>
+        // Akun Login Pengurus & Warga
         const ACCOUNTS = {
             'superuser': { pass: 'super123', role: 'superuser', label: 'Superuser' },
             'admin': { pass: 'admin123', role: 'superuser', label: 'Superuser' },
             'warga': { pass: 'warga123', role: 'user', label: 'User Biasa' }
         };
 
+        // Data Awal Cadangan (Jika Database Cloud Masih Kosong)
         const initialResidents = [
-            { id: 1, nik: "3201011508890001", nama: "Hartono Kusuma", jalan: "Jl. Asri Raya Utama", blok: "Blok A1 No. 05", gender: "L", hubungan: "Kepala Keluarga", status: "Tetap (Pemilik)", kontak: "081234567890", jmlMobil: 1, platMobil: "B 1425 BMA", jmlMotor: 2, platMotor: "B 6543 BMA, B 3321 XYZ" },
-            { id: 2, nik: "3201015609920002", nama: "Siti Rahmawati", jalan: "Jl. Asri Raya Utama", blok: "Blok A1 No. 05", gender: "P", hubungan: "Istri", status: "Tetap (Pemilik)", kontak: "081234567891", jmlMobil: 0, platMobil: "", jmlMotor: 0, platMotor: "" },
-            { id: 3, nik: "3201012204850003", nama: "Denny Setiawan", jalan: "Jl. Taman Asri 3", blok: "Blok B3 No. 12", gender: "L", hubungan: "Kepala Keluarga", status: "Kontrak / Sewa", kontak: "085698741230", jmlMobil: 4, platMobil: "B 2024 ABC, D 1888 DEF, B 9988 QWE, B 1122 RT", jmlMotor: 1, platMotor: "B 4411 GHI" },
-            { id: 4, nik: "3201016607750004", nama: "Rahmat Hidayat", jalan: "Jl. Melati Asri 1", blok: "Blok C2 No. 08", gender: "L", hubungan: "Kepala Keluarga", status: "Pindah Keluar", kontak: "081399887766", jmlMobil: 1, platMobil: "B 9901 ZXC", jmlMotor: 0, platMotor: "" },
-            { id: 5, nik: "3201017805820005", nama: "Bambang Soediro", jalan: "Jl. Melati Asri 2", blok: "Blok C1 No. 02", gender: "L", hubungan: "Kepala Keluarga", status: "Meninggal Dunia", kontak: "-", jmlMobil: 0, platMobil: "", jmlMotor: 0, platMotor: "" }
+            { id: "1", nik: "3201011508890001", nama: "Hartono Kusuma", jalan: "Jl. Asri Raya Utama", blok: "Blok A1 No. 05", gender: "L", hubungan: "Kepala Keluarga", status: "Tetap (Pemilik)", kontak: "081234567890", jmlMobil: 1, platMobil: "B 1425 BMA", jmlMotor: 2, platMotor: "B 6543 BMA, B 3321 XYZ" },
+            { id: "2", nik: "3201015609920002", nama: "Siti Rahmawati", jalan: "Jl. Asri Raya Utama", blok: "Blok A1 No. 05", gender: "P", hubungan: "Istri", status: "Tetap (Pemilik)", kontak: "081234567891", jmlMobil: 0, platMobil: "", jmlMotor: 0, platMotor: "" },
+            { id: "3", nik: "3201012204850003", nama: "Denny Setiawan", jalan: "Jl. Taman Asri 3", blok: "Blok B3 No. 12", gender: "L", hubungan: "Kepala Keluarga", status: "Kontrak / Sewa", kontak: "085698741230", jmlMobil: 4, platMobil: "B 2024 ABC, D 1888 DEF, B 9988 QWE, B 1122 RT", jmlMotor: 1, platMotor: "B 4411 GHI" },
+            { id: "4", nik: "3201016607750004", nama: "Rahmat Hidayat", jalan: "Jl. Melati Asri 1", blok: "Blok C2 No. 08", gender: "L", hubungan: "Kepala Keluarga", status: "Pindah Keluar", kontak: "081399887766", jmlMobil: 1, platMobil: "B 9901 ZXC", jmlMotor: 0, platMotor: "" },
+            { id: "5", nik: "3201017805820005", nama: "Bambang Soediro", jalan: "Jl. Melati Asri 2", blok: "Blok C1 No. 02", gender: "L", hubungan: "Kepala Keluarga", status: "Meninggal Dunia", kontak: "-", jmlMobil: 0, platMobil: "", jmlMotor: 0, platMotor: "" }
         ];
 
         const initialSecurities = [
-            { id: 1, nama: "Pak Joko Susilo", peran: "Danru (Komandan Regu)", shift: "Shift Pagi (07.00 - 19.00)", kontak: "081299112233" },
-            { id: 2, nama: "Pak Supriadi", peran: "Anggota (Pos Utama)", shift: "Shift Pagi (07.00 - 19.00)", kontak: "081299112234" },
-            { id: 3, nama: "Pak Hendra Wijaya", peran: "Anggota (Patroli Lingkungan)", shift: "Shift Malam (19.00 - 07.00)", kontak: "081299112235" },
-            { id: 4, nama: "Pak Agus Pratama", peran: "Anggota (Pos Gerbang Belakang)", shift: "Shift Malam (19.00 - 07.00)", kontak: "081299112236" }
+            { id: "1", nama: "Pak Joko Susilo", peran: "Danru (Komandan Regu)", shift: "Shift Pagi (07.00 - 19.00)", kontak: "081299112233" },
+            { id: "2", nama: "Pak Supriadi", peran: "Anggota (Pos Utama)", shift: "Shift Pagi (07.00 - 19.00)", kontak: "081299112234" },
+            { id: "3", nama: "Pak Hendra Wijaya", peran: "Anggota (Patroli Lingkungan)", shift: "Shift Malam (19.00 - 07.00)", kontak: "081299112235" },
+            { id: "4", nama: "Pak Agus Pratama", peran: "Anggota (Pos Gerbang Belakang)", shift: "Shift Malam (19.00 - 07.00)", kontak: "081299112236" }
         ];
 
-        let residents = JSON.parse(localStorage.getItem('cluster_asri_db_dark_v16')) || initialResidents;
-        let securities = JSON.parse(localStorage.getItem('cluster_asri_sec_db_v1')) || initialSecurities;
+        // ================= KONEKSI FIREBASE CLOUD REALTIME =================
+        const firebaseConfig = {
+            apiKey: "AIzaSyDq5e7y-i8RfRmE1xVW8366DFU_3HavUrE",
+            authDomain: "cluster-bumi-asri.firebaseapp.com",
+            projectId: "cluster-bumi-asri",
+            storageBucket: "cluster-bumi-asri.firebasestorage.app",
+            messagingSenderId: "683657017337",
+            appId: "1:683657017337:web:8ff49c3ee4218f1c3eaf28"
+        };
+
+        // Inisialisasi Firebase & Firestore Database
+        firebase.initializeApp(firebaseConfig);
+        const db = firebase.firestore();
+
+        let residents = [];
+        let securities = [];
         let currentRole = sessionStorage.getItem('currentRole') || null;
 
-        function saveStorage() {
-            localStorage.setItem('cluster_asri_db_dark_v16', JSON.stringify(residents));
-        }
+        // ================= LISTENER DATABASE REALTIME =================
+        // Mendengarkan perubahan data warga secara langsung (Real-Time Push)
+        db.collection("residents").onSnapshot((snapshot) => {
+            if (snapshot.empty) {
+                // Jika database cloud pertama kali dibuat masih kosong, otomatis isi dengan data sampel awal
+                initialResidents.forEach(res => {
+                    db.collection("residents").doc(String(res.id)).set(res);
+                });
+                return;
+            }
 
-        function saveSecurityStorage() {
-            localStorage.setItem('cluster_asri_sec_db_v1', JSON.stringify(securities));
-        }
+            residents = [];
+            snapshot.forEach(doc => {
+                residents.push({ ...doc.data(), id: doc.id });
+            });
+
+            // Urutkan data berdasarkan ID terbaru
+            residents.sort((a, b) => String(b.id).localeCompare(String(a.id)));
+            filterResidents();
+        }, (error) => {
+            console.error("Gagal terhubung ke Cloud Warga:", error);
+            showToast("Koneksi database bermasalah: " + error.message, false);
+        });
+
+        // Mendengarkan perubahan data security secara langsung
+        db.collection("securities").onSnapshot((snapshot) => {
+            if (snapshot.empty) {
+                initialSecurities.forEach(sec => {
+                    db.collection("securities").doc(String(sec.id)).set(sec);
+                });
+                return;
+            }
+
+            securities = [];
+            snapshot.forEach(doc => {
+                securities.push({ ...doc.data(), id: doc.id });
+            });
+
+            securities.sort((a, b) => String(a.id).localeCompare(String(b.id)));
+            renderSecurityList();
+            updateStats();
+        }, (error) => {
+            console.error("Gagal terhubung ke Cloud Security:", error);
+        });
 
         function formatWhatsAppNumber(phone) {
             if (!phone || phone === '-') return '';
@@ -825,7 +874,6 @@
             checkAuth();
         }
 
-        // ================= SISTEM PENCARIAN & FILTER KOKOH (ANTI-BUG) =================
         function clearSearchInput() {
             const input = document.getElementById('searchInput');
             input.value = "";
@@ -839,7 +887,6 @@
             const clearBtn = document.getElementById('clearSearchBtn');
             const query = (searchInput ? searchInput.value : '').toLowerCase().trim();
             
-            // Tampilkan tombol silang (X) hanya jika ada ketikan
             if (clearBtn) {
                 if (query.length > 0) {
                     clearBtn.classList.remove('hidden');
@@ -962,11 +1009,10 @@
                     }
 
                     const garasiContent = vehicleHTML.length > 0 ? `<div class="space-y-2 py-1">${vehicleHTML.join('')}</div>` : `<span class="text-slate-500 text-xs italic">Tanpa kendaraan</span>`;
-
                     const rowClass = isInactive ? "opacity-60 hover:opacity-100 bg-slate-950/40" : "hover:bg-emerald-950/20";
-
                     const cleanPhone = formatWhatsAppNumber(warga.kontak);
                     const safeName = nama.replace(/'/g, "\\'");
+                    
                     const waLinkHTML = cleanPhone ? `
                         <div class="inline-flex items-center gap-1.5">
                             <button onclick="openWhatsAppDirect('${warga.kontak}', '${safeName}')" class="text-brand-300 hover:text-brand-200 font-semibold inline-flex items-center gap-1.5 bg-brand-950/60 hover:bg-brand-900/80 border border-brand-500/30 hover:border-brand-500 px-2.5 py-1 rounded-xl transition text-xs shadow-xs" title="Chat via WhatsApp">
@@ -1019,10 +1065,10 @@
                             <td class="px-4 py-3.5 text-center sticky right-0 bg-[#07131e] z-10 border-l border-slate-800 shadow-[-10px_0_15px_rgba(0,0,0,0.5)]">
                                 ${isSuper ? `
                                     <div class="flex items-center justify-center gap-2">
-                                        <button onclick="openEditModal(${warga.id})" class="p-1.5 text-slate-400 hover:text-brand-400 hover:bg-slate-800/90 rounded-lg transition" title="Edit Data">
+                                        <button onclick="openEditModal('${warga.id}')" class="p-1.5 text-slate-400 hover:text-brand-400 hover:bg-slate-800/90 rounded-lg transition" title="Edit Data">
                                             <i class="fa-solid fa-pen-to-square text-sm"></i>
                                         </button>
-                                        <button onclick="deleteResident(${warga.id})" class="p-1.5 text-slate-400 hover:text-rose-400 hover:bg-slate-800/90 rounded-lg transition" title="Hapus Data">
+                                        <button onclick="deleteResident('${warga.id}')" class="p-1.5 text-slate-400 hover:text-rose-400 hover:bg-slate-800/90 rounded-lg transition" title="Hapus Data">
                                             <i class="fa-regular fa-trash-can text-sm"></i>
                                         </button>
                                     </div>
@@ -1036,7 +1082,6 @@
             updateStats();
         }
 
-        // ================= HITUNG STATISTIK =================
         function updateStats() {
             const activeResidents = residents.filter(r => !String(r.status || '').includes('Pindah') && !String(r.status || '').includes('Meninggal'));
             
@@ -1080,7 +1125,7 @@
             document.getElementById('statMotor').innerText = totalMotor;
         }
 
-        // ================= KELOLA DATA SECURITY (MODAL) =================
+        // ================= KELOLA SECURITY (FIREBASE REALTIME) =================
         function openSecurityModal() {
             const isSuper = (currentRole === 'superuser');
             const formContainer = document.getElementById('secAddFormContainer');
@@ -1105,13 +1150,13 @@
             totalEl.innerText = securities.length;
 
             if (securities.length === 0) {
-                container.innerHTML = `<div class="text-center py-6 text-slate-500 text-xs italic">Belum ada personil security yang terdaftar.</div>`;
+                container.innerHTML = `<div class="text-center py-6 text-slate-500 text-xs italic">Belum ada personil security yang terdaftar di cloud.</div>`;
                 return;
             }
 
             const isSuper = (currentRole === 'superuser');
 
-            securities.forEach((sec, idx) => {
+            securities.forEach((sec) => {
                 const isPagi = String(sec.shift || '').toLowerCase().includes('pagi');
 
                 const card = `
@@ -1135,7 +1180,7 @@
                                 <span>${sec.kontak}</span>
                             </button>
                             ${isSuper ? `
-                                <button onclick="deleteSecurity(${sec.id})" class="p-1.5 text-slate-500 hover:text-rose-400 hover:bg-slate-800 rounded-lg transition" title="Hapus Personil">
+                                <button onclick="deleteSecurity('${sec.id}')" class="p-1.5 text-slate-500 hover:text-rose-400 hover:bg-slate-800 rounded-lg transition" title="Hapus Personil">
                                     <i class="fa-regular fa-trash-can text-xs"></i>
                                 </button>
                             ` : ''}
@@ -1150,34 +1195,33 @@
             e.preventDefault();
             if (currentRole !== 'superuser') return;
 
+            const newId = String(Date.now());
             const newSec = {
-                id: Date.now(),
+                id: newId,
                 nama: document.getElementById('secNama').value.trim(),
                 peran: document.getElementById('secPeran').value.trim(),
                 shift: document.getElementById('secShift').value,
                 kontak: document.getElementById('secKontak').value.trim()
             };
 
-            securities.push(newSec);
-            saveSecurityStorage();
-            renderSecurityList();
-            updateStats();
-            document.getElementById('secForm').reset();
-            showToast("Personil security baru berhasil ditambahkan!");
+            db.collection("securities").doc(newId).set(newSec)
+                .then(() => {
+                    document.getElementById('secForm').reset();
+                    showToast("Personil security berhasil disimpan ke Cloud!");
+                })
+                .catch(err => showToast("Gagal menyimpan: " + err.message, false));
         }
 
         function deleteSecurity(id) {
             if (currentRole !== 'superuser') return;
             if (confirm("Apakah Anda yakin ingin menghapus data personil security ini?")) {
-                securities = securities.filter(s => s.id !== id);
-                saveSecurityStorage();
-                renderSecurityList();
-                updateStats();
-                showToast("Personil security berhasil dihapus.");
+                db.collection("securities").doc(String(id)).delete()
+                    .then(() => showToast("Personil security berhasil dihapus."))
+                    .catch(err => showToast("Gagal menghapus: " + err.message, false));
             }
         }
 
-        // ================= MODAL WARGA =================
+        // ================= MODAL WARGA (FIREBASE REALTIME) =================
         function openModal() {
             if (currentRole !== 'superuser') return;
             document.getElementById('editResidentId').value = "";
@@ -1187,13 +1231,13 @@
             document.getElementById('jmlMotor').value = "0";
             document.getElementById('modalTitle').innerText = "Registrasi Warga & Kendaraan";
             document.getElementById('modalIcon').className = "fa-solid fa-user-plus text-base";
-            document.getElementById('modalSubmitBtn').innerText = "Simpan Data Warga";
+            document.getElementById('modalSubmitBtn').innerText = "Simpan ke Cloud";
             document.getElementById('residentModal').classList.remove('hidden');
         }
 
         function openEditModal(id) {
             if (currentRole !== 'superuser') return;
-            const warga = residents.find(r => r.id === id);
+            const warga = residents.find(r => String(r.id) === String(id));
             if (!warga) return;
 
             document.getElementById('editResidentId').value = warga.id;
@@ -1214,7 +1258,7 @@
 
             document.getElementById('modalTitle').innerText = "Edit Data Warga & Status";
             document.getElementById('modalIcon').className = "fa-solid fa-pen-to-square text-base";
-            document.getElementById('modalSubmitBtn').innerText = "Update Perubahan";
+            document.getElementById('modalSubmitBtn').innerText = "Update ke Cloud";
             document.getElementById('residentModal').classList.remove('hidden');
         }
 
@@ -1251,33 +1295,31 @@
             };
 
             if (editId) {
-                const index = residents.findIndex(r => r.id == editId);
-                if (index !== -1) {
-                    residents[index] = { ...residents[index], ...residentData };
-                    showToast("Perubahan data kependudukan berhasil disimpan!");
-                }
+                // Update ke Firebase
+                db.collection("residents").doc(String(editId)).set(residentData, { merge: true })
+                    .then(() => showToast("Perubahan data warga berhasil disinkronkan ke Cloud!"))
+                    .catch(err => showToast("Gagal update data: " + err.message, false));
             } else {
-                const newResident = { id: Date.now(), ...residentData };
-                residents.unshift(newResident);
-                showToast("Warga & kendaraan baru berhasil didaftarkan!");
+                // Tambah data baru ke Firebase
+                const newId = String(Date.now());
+                db.collection("residents").doc(newId).set({ id: newId, ...residentData })
+                    .then(() => showToast("Warga baru berhasil ditambahkan ke Cloud!"))
+                    .catch(err => showToast("Gagal menyimpan: " + err.message, false));
             }
 
-            saveStorage();
-            filterResidents();
             closeModal();
         }
 
         function deleteResident(id) {
             if (currentRole !== 'superuser') return;
-            if (confirm("Apakah Anda yakin ingin menghapus permanen data warga dan seluruh kendaraannya?")) {
-                residents = residents.filter(r => r.id !== id);
-                saveStorage();
-                filterResidents();
-                showToast("Data warga berhasil dihapus.");
+            if (confirm("Apakah Anda yakin ingin menghapus data warga ini dari Cloud?")) {
+                db.collection("residents").doc(String(id)).delete()
+                    .then(() => showToast("Data warga berhasil dihapus dari Cloud."))
+                    .catch(err => showToast("Gagal menghapus: " + err.message, false));
             }
         }
 
-        // ================= FITUR EXCEL =================
+        // ================= FITUR EXCEL DENGAN CLOUD SYNC =================
         function triggerExcelImport() {
             if (currentRole !== 'superuser') {
                 showToast("Akses ditolak: Hanya Superuser yang dapat mengunggah Excel!", false);
@@ -1304,7 +1346,9 @@
                         return;
                     }
 
+                    const batch = db.batch();
                     let addedCount = 0;
+
                     rows.forEach((row, index) => {
                         const getVal = (possibleKeys) => {
                             for (let k of possibleKeys) {
@@ -1343,8 +1387,11 @@
                         const platMotor = getVal(["plat motor", "plat nomor motor"]).toUpperCase();
                         const jmlMotor = platMotor.split(',').map(p => p.trim()).filter(p => p).length;
 
-                        residents.unshift({
-                            id: Date.now() + index + Math.floor(Math.random() * 1000),
+                        const docId = String(Date.now() + index + Math.floor(Math.random() * 1000));
+                        const docRef = db.collection("residents").doc(docId);
+
+                        batch.set(docRef, {
+                            id: docId,
                             nik: nik || "-",
                             nama: nama,
                             jalan: jalan,
@@ -1362,9 +1409,11 @@
                     });
 
                     if (addedCount > 0) {
-                        saveStorage();
-                        filterResidents();
-                        showToast(`Berhasil menambahkan ${addedCount} data dari Excel!`);
+                        batch.commit().then(() => {
+                            showToast(`Berhasil upload ${addedCount} data warga langsung ke Cloud!`);
+                        }).catch(err => {
+                            showToast("Gagal menyimpan ke Cloud: " + err.message, false);
+                        });
                     } else {
                         showToast("Tidak ada data warga valid yang terbaca dari Excel.", false);
                     }
