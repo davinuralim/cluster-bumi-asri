@@ -2,8 +2,8 @@
 <html lang="id">
 <head>
     <meta charset="UTF-8">
-    <!-- Format lebar 1280px agar di HP tampilannya persis seperti di laptop -->
-    <meta name="viewport" content="width=1280, initial-scale=0.3, maximum-scale=3.0, user-scalable=yes">
+    <!-- Viewport Responsif Otomatis Sesuai Layar HP / Desktop -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Portal Kependudukan & Kendaraan - Cluster Bumi Asri</title>
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -36,7 +36,6 @@
     <style>
         body { 
             font-family: 'Plus Jakarta Sans', sans-serif; 
-            min-width: 1280px; 
             background: radial-gradient(circle at 50% -20%, #0d2b27 0%, #081622 45%, #050b14 100%);
             background-attachment: fixed;
         }
@@ -44,13 +43,13 @@
         
         /* Modern Asri Glassmorphism */
         .dark-glass {
-            background: rgba(8, 20, 30, 0.78);
+            background: rgba(8, 20, 30, 0.85);
             backdrop-filter: blur(22px);
             -webkit-backdrop-filter: blur(22px);
             border: 1px solid rgba(52, 211, 153, 0.15);
         }
         .dark-glass-card {
-            background: rgba(11, 23, 36, 0.75);
+            background: rgba(11, 23, 36, 0.8);
             backdrop-filter: blur(18px);
             -webkit-backdrop-filter: blur(18px);
             border: 1px solid rgba(52, 211, 153, 0.14);
@@ -58,8 +57,8 @@
 
         /* Custom Scrollbar */
         ::-webkit-scrollbar {
-            width: 7px;
-            height: 7px;
+            width: 6px;
+            height: 6px;
         }
         ::-webkit-scrollbar-track {
             background: rgba(7, 16, 26, 0.9);
@@ -77,37 +76,37 @@
 <body class="text-slate-200 min-h-screen flex flex-col justify-between selection:bg-brand-500 selection:text-white relative overflow-x-hidden">
 
     <!-- Ambient Glowing Lights Nuansa Asri & Elegan -->
-    <div class="fixed top-[-80px] left-1/4 w-[750px] h-[450px] bg-emerald-500/15 rounded-full blur-[160px] pointer-events-none -z-10"></div>
-    <div class="fixed bottom-0 right-10 w-[600px] h-[500px] bg-teal-500/12 rounded-full blur-[170px] pointer-events-none -z-10"></div>
-    <div class="fixed top-1/2 left-0 w-[450px] h-[400px] bg-cyan-600/10 rounded-full blur-[150px] pointer-events-none -z-10"></div>
+    <div class="fixed top-[-80px] left-1/4 w-[350px] md:w-[750px] h-[350px] md:h-[450px] bg-emerald-500/15 rounded-full blur-[120px] md:blur-[160px] pointer-events-none -z-10"></div>
+    <div class="fixed bottom-0 right-5 w-[300px] md:w-[600px] h-[350px] md:h-[500px] bg-teal-500/12 rounded-full blur-[130px] md:blur-[170px] pointer-events-none -z-10"></div>
+    <div class="fixed top-1/2 left-0 w-[250px] md:w-[450px] h-[300px] md:h-[400px] bg-cyan-600/10 rounded-full blur-[120px] md:blur-[150px] pointer-events-none -z-10"></div>
 
     <!-- Hidden Input untuk File Excel -->
     <input type="file" id="excelFileInput" accept=".xlsx, .xls" class="hidden" onchange="handleExcelUpload(event)">
 
     <!-- Toast Notification -->
-    <div id="toast" class="fixed top-6 right-6 z-50 transform transition-all duration-300 translate-y-[-160%] opacity-0 bg-slate-900/95 backdrop-blur-md text-white px-5 py-3.5 rounded-2xl shadow-2xl flex items-center gap-3 border border-emerald-500/30 text-sm">
-        <i id="toastIcon" class="fa-solid fa-circle-check text-brand-400 text-lg"></i>
+    <div id="toast" class="fixed top-4 right-4 md:top-6 md:right-6 z-50 transform transition-all duration-300 translate-y-[-160%] opacity-0 bg-slate-900/95 backdrop-blur-md text-white px-4 md:px-5 py-3 md:py-3.5 rounded-2xl shadow-2xl flex items-center gap-3 border border-emerald-500/30 text-xs md:text-sm max-w-[90vw]">
+        <i id="toastIcon" class="fa-solid fa-circle-check text-brand-400 text-lg shrink-0"></i>
         <span id="toastMsg" class="font-medium">Notifikasi</span>
     </div>
 
     <!-- ================= VIEW 1: LOGIN ================= -->
-    <div id="loginView" class="min-h-screen w-full flex items-center justify-center p-6 relative z-10">
-        <div class="w-[480px]">
-            <div class="dark-glass rounded-3xl shadow-[0_20px_60px_rgba(0,0,0,0.7)] p-10 space-y-6 border border-emerald-500/20">
+    <div id="loginView" class="min-h-screen w-full flex items-center justify-center p-4 md:p-6 relative z-10">
+        <div class="w-full max-w-[440px]">
+            <div class="dark-glass rounded-3xl shadow-[0_20px_60px_rgba(0,0,0,0.7)] p-6 sm:p-8 md:p-9 space-y-6 border border-emerald-500/20">
                 
                 <div class="text-center space-y-3">
-                    <div class="inline-flex p-4 bg-gradient-to-tr from-brand-600 via-teal-600 to-emerald-400 text-white rounded-2xl shadow-xl shadow-brand-500/25">
-                        <i class="fa-solid fa-building-shield text-3xl"></i>
+                    <div class="inline-flex p-3.5 md:p-4 bg-gradient-to-tr from-brand-600 via-teal-600 to-emerald-400 text-white rounded-2xl shadow-xl shadow-brand-500/25">
+                        <i class="fa-solid fa-building-shield text-2xl md:text-3xl"></i>
                     </div>
                     <div>
-                        <h2 class="text-2xl font-extrabold text-white tracking-tight">Cluster Bumi Asri</h2>
-                        <p class="text-xs text-emerald-300/80 mt-0.5">Portal Administrasi Warga & Keamanan Lingkungan</p>
+                        <h2 class="text-xl md:text-2xl font-extrabold text-white tracking-tight">Cluster Bumi Asri</h2>
+                        <p class="text-[11px] md:text-xs text-emerald-300/80 mt-0.5">Portal Administrasi Warga & Keamanan Lingkungan</p>
                     </div>
                 </div>
 
                 <form id="loginForm" onsubmit="handleLogin(event)" class="space-y-4">
                     <div id="loginError" class="hidden p-3 bg-rose-950/70 border border-rose-800 text-rose-300 rounded-xl text-xs font-semibold flex items-center gap-2">
-                        <i class="fa-solid fa-circle-exclamation text-sm"></i>
+                        <i class="fa-solid fa-circle-exclamation text-sm shrink-0"></i>
                         <span>Username atau password tidak sesuai!</span>
                     </div>
 
@@ -124,8 +123,9 @@
                     <div>
                         <div class="flex items-center justify-between mb-1.5">
                             <label class="block text-xs font-bold uppercase tracking-wider text-slate-300">Password</label>
-                            <button type="button" onclick="openForgotModal()" class="text-[11px] font-semibold text-emerald-400 hover:text-brand-300 hover:underline transition">
-                                Lupa Akun / Sandi?
+                            <!-- Tombol Langsung Hubungi WhatsApp Pengurus -->
+                            <button type="button" onclick="contactWhatsAppForgot()" class="text-[11px] font-semibold text-emerald-400 hover:text-brand-300 hover:underline transition flex items-center gap-1">
+                                <i class="fa-brands fa-whatsapp text-xs"></i> Lupa Sandi?
                             </button>
                         </div>
                         <div class="relative">
@@ -149,7 +149,7 @@
                 <div class="space-y-2 pt-2 border-t border-slate-800/80">
                     <p class="text-[11px] font-bold uppercase tracking-wider text-slate-400 text-center">Pilihan Akses Masuk:</p>
                     <div class="grid grid-cols-2 gap-2 text-xs">
-                        <!-- Superuser Dikunci (Tidak bisa diklik, hanya info wajib input manual) -->
+                        <!-- Superuser Dikunci / Wajib Manual -->
                         <div class="p-2.5 rounded-2xl border border-amber-900/40 bg-amber-950/20 text-amber-300/60 flex flex-col justify-between cursor-not-allowed select-none opacity-80" title="Akses Superuser wajib diketik manual demi keamanan">
                             <div class="flex items-center justify-between">
                                 <span class="flex items-center gap-1 text-[11px] text-amber-400/90 font-bold">
@@ -175,55 +175,13 @@
                     </div>
                 </div>
 
-                <div class="pt-3 text-center">
-                    <div class="inline-flex items-center gap-2 px-4 py-2 bg-slate-900/90 border border-emerald-500/30 rounded-2xl text-xs text-slate-300 font-medium shadow-md">
-                        <i class="fa-solid fa-shield-halved text-brand-400 text-sm"></i>
-                        <span>Dilisensikan resmi: <strong class="text-white font-extrabold text-sm tracking-wide bg-gradient-to-r from-brand-300 to-teal-300 bg-clip-text text-transparent ml-1">Davi Nur Alim</strong></span>
+                <div class="pt-2 text-center">
+                    <div class="inline-flex items-center gap-2 px-3 py-1.5 bg-slate-900/90 border border-emerald-500/30 rounded-2xl text-[11px] text-slate-300 font-medium shadow-md">
+                        <i class="fa-solid fa-shield-halved text-brand-400 text-xs"></i>
+                        <span>Dilisensikan resmi: <strong class="text-white font-extrabold tracking-wide bg-gradient-to-r from-brand-300 to-teal-300 bg-clip-text text-transparent ml-1">Davi Nur Alim</strong></span>
                     </div>
                 </div>
 
-            </div>
-        </div>
-    </div>
-
-
-    <!-- ================= MODAL LUPA PASSWORD / USERNAME ================= -->
-    <div id="forgotModal" class="fixed inset-0 bg-black/80 backdrop-blur-md z-50 flex items-center justify-center p-4 hidden">
-        <div class="bg-slate-900 text-slate-100 rounded-3xl shadow-2xl w-[450px] overflow-hidden border border-emerald-500/30">
-            <div class="bg-gradient-to-r from-teal-700 to-emerald-700 px-6 py-4 flex justify-between items-center text-white">
-                <div class="flex items-center gap-2.5">
-                    <i class="fa-solid fa-circle-question text-lg"></i>
-                    <h3 class="font-bold text-sm">Bantuan Akses Akun</h3>
-                </div>
-                <button onclick="closeForgotModal()" class="w-8 h-8 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center transition">
-                    <i class="fa-solid fa-xmark text-sm"></i>
-                </button>
-            </div>
-            <div class="p-6 space-y-4 text-xs">
-                <div class="p-3.5 bg-slate-950/70 border border-slate-800 rounded-2xl space-y-2">
-                    <h4 class="font-bold text-emerald-400 flex items-center gap-1.5">
-                        <i class="fa-solid fa-info-circle"></i> Info Akses Masuk
-                    </h4>
-                    <p class="text-slate-300 leading-relaxed">
-                        Jika Anda adalah <strong>Pengurus RT / Superuser</strong> dan lupa data login, silakan hubungi kontak resmi Administrator pengembang sistem atau Pengurus RW untuk verifikasi.
-                    </p>
-                </div>
-
-                <div class="p-3.5 bg-blue-950/30 border border-blue-900/50 rounded-2xl space-y-1 text-slate-300">
-                    <span class="text-blue-400 font-bold block">Akses Demo Warga:</span>
-                    <div>Username: <code class="text-white bg-slate-800 px-1.5 py-0.5 rounded font-mono">warga</code></div>
-                    <div>Password: <code class="text-white bg-slate-800 px-1.5 py-0.5 rounded font-mono">warga123</code></div>
-                </div>
-
-                <div class="pt-2 flex flex-col gap-2">
-                    <a href="https://api.whatsapp.com/send?phone=6281234567890&text=Halo%20Admin,%20saya%20butuh%20bantuan%20reset%20akun%20Cluster%20Bumi%20Asri" target="_blank" class="w-full py-2.5 bg-emerald-600 hover:bg-emerald-500 text-white font-bold rounded-xl flex items-center justify-center gap-2 transition">
-                        <i class="fa-brands fa-whatsapp text-sm"></i>
-                        <span>Hubungi WhatsApp Pengurus</span>
-                    </a>
-                    <button type="button" onclick="closeForgotModal()" class="w-full py-2 bg-slate-800 hover:bg-slate-700 text-slate-300 font-bold rounded-xl transition">
-                        Tutup
-                    </button>
-                </div>
             </div>
         </div>
     </div>
@@ -232,292 +190,276 @@
     <!-- ================= VIEW 2: DASHBOARD ================= -->
     <div id="dashboardView" class="hidden w-full flex-col min-h-screen">
         
-        <!-- Header Navbar Dark Glass -->
+        <!-- Header Navbar Responsif -->
         <header class="dark-glass border-b border-emerald-500/20 sticky top-0 z-30 shadow-xl shadow-black/40">
-            <div class="w-[1240px] mx-auto px-6 py-3.5 flex justify-between items-center gap-4">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 py-3 flex flex-wrap justify-between items-center gap-3">
                 
                 <!-- Sisi Kiri: Logo & Info Cluster -->
-                <div class="flex items-center space-x-3.5 shrink-0">
-                    <div class="w-10 h-10 bg-gradient-to-tr from-brand-600 via-teal-600 to-emerald-400 text-white rounded-xl shadow-lg shadow-brand-500/25 flex items-center justify-center text-lg">
+                <div class="flex items-center space-x-3 shrink-0">
+                    <div class="w-9 h-9 sm:w-10 sm:h-10 bg-gradient-to-tr from-brand-600 via-teal-600 to-emerald-400 text-white rounded-xl shadow-lg shadow-brand-500/25 flex items-center justify-center text-base sm:text-lg">
                         <i class="fa-solid fa-city"></i>
                     </div>
                     <div>
-                        <div class="flex items-center gap-2">
-                            <h1 class="text-lg font-extrabold text-white tracking-tight">Cluster Bumi Asri</h1>
-                            <span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-emerald-950/90 text-brand-400 border border-brand-500/40 text-[10px] font-bold uppercase tracking-wider shadow-inner">
-                                <span class="w-1.5 h-1.5 rounded-full bg-brand-400 animate-pulse"></span> Cloud Real-Time
+                        <div class="flex items-center gap-1.5">
+                            <h1 class="text-base sm:text-lg font-extrabold text-white tracking-tight leading-none">Cluster Bumi Asri</h1>
+                            <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-emerald-950/90 text-brand-400 border border-brand-500/40 text-[9px] font-bold uppercase tracking-wider">
+                                <span class="w-1.5 h-1.5 rounded-full bg-brand-400 animate-pulse"></span> Cloud
                             </span>
                         </div>
-                        <p class="text-xs text-slate-400 font-medium">Sistem Administrasi Warga & Keamanan Lingkungan</p>
+                        <p class="text-[10px] sm:text-xs text-slate-400 font-medium mt-0.5">Administrasi & Keamanan Lingkungan</p>
                     </div>
                 </div>
 
-                <!-- Bagian Tengah: Lisensi Davi Nur Alim -->
-                <div class="flex items-center justify-center flex-1">
-                    <div class="inline-flex items-center gap-2.5 px-4 py-2 bg-gradient-to-r from-emerald-950/70 via-slate-900/90 to-teal-950/70 border border-emerald-500/40 rounded-2xl shadow-lg shadow-emerald-950/50 hover:border-brand-400 transition">
-                        <div class="w-7 h-7 rounded-xl bg-gradient-to-br from-brand-500 to-teal-600 flex items-center justify-center text-white text-xs shadow-md">
-                            <i class="fa-solid fa-shield-halved"></i>
-                        </div>
-                        <div class="text-left leading-tight">
-                            <span class="text-[11px] font-medium text-slate-300 block">Dibuat & Dilisensikan secara resmi oleh:</span>
-                            <strong class="text-sm font-extrabold tracking-wide bg-gradient-to-r from-brand-300 via-emerald-300 to-teal-200 bg-clip-text text-transparent">Davi Nur Alim</strong>
-                        </div>
+                <!-- Bagian Tengah: Lisensi Davi Nur Alim (Tampil Ringkas di HP) -->
+                <div class="hidden lg:flex items-center justify-center flex-1 px-4">
+                    <div class="inline-flex items-center gap-2 px-3.5 py-1.5 bg-gradient-to-r from-emerald-950/70 via-slate-900/90 to-teal-950/70 border border-emerald-500/40 rounded-xl shadow-md">
+                        <i class="fa-solid fa-shield-halved text-brand-400 text-xs"></i>
+                        <span class="text-[11px] text-slate-300">Dilisensikan resmi oleh: <strong class="text-xs font-extrabold bg-gradient-to-r from-brand-300 to-teal-200 bg-clip-text text-transparent ml-0.5">Davi Nur Alim</strong></span>
                     </div>
                 </div>
 
                 <!-- Sisi Kanan: Status User & Logout -->
-                <div class="flex items-center gap-3 shrink-0">
-                    <div id="userBadge" class="flex items-center gap-2 text-xs font-bold px-3.5 py-1.5 rounded-xl border shadow-xs"></div>
-                    <button onclick="handleLogout()" class="px-4 py-2 text-xs font-bold text-rose-300 bg-rose-950/50 hover:bg-rose-900/70 border border-rose-800/70 rounded-xl transition flex items-center gap-1.5 shadow-sm">
+                <div class="flex items-center gap-2 shrink-0">
+                    <div id="userBadge" class="flex items-center gap-1.5 text-[11px] font-bold px-2.5 py-1 sm:px-3 sm:py-1.5 rounded-xl border shadow-xs"></div>
+                    <button onclick="handleLogout()" class="px-3 py-1.5 text-xs font-bold text-rose-300 bg-rose-950/50 hover:bg-rose-900/70 border border-rose-800/70 rounded-xl transition flex items-center gap-1 shadow-sm">
                         <i class="fa-solid fa-arrow-right-from-bracket"></i>
-                        <span>Keluar</span>
+                        <span class="hidden sm:inline">Keluar</span>
                     </button>
                 </div>
             </div>
         </header>
 
         <!-- Main Dashboard Workspace -->
-        <main class="w-[1240px] mx-auto px-6 py-7 space-y-6 flex-1">
+        <main class="max-w-7xl w-full mx-auto px-4 sm:px-6 py-5 md:py-7 space-y-5 md:space-y-6 flex-1">
 
             <!-- Banner User Biasa -->
-            <div id="roleAlert" class="hidden p-4 rounded-2xl bg-amber-950/30 border border-amber-800/50 text-amber-200 flex items-start gap-3">
-                <div class="p-2 bg-amber-900/40 rounded-xl text-amber-400">
-                    <i class="fa-solid fa-lock text-base"></i>
+            <div id="roleAlert" class="hidden p-3.5 md:p-4 rounded-2xl bg-amber-950/30 border border-amber-800/50 text-amber-200 flex items-start gap-3">
+                <div class="p-1.5 bg-amber-900/40 rounded-xl text-amber-400 shrink-0">
+                    <i class="fa-solid fa-lock text-sm"></i>
                 </div>
                 <div class="text-xs">
                     <h4 class="font-bold text-amber-300 uppercase tracking-wider">Mode Akses Terbatas (User Biasa)</h4>
-                    <p class="text-amber-400/80 mt-0.5">Anda hanya dapat melihat dan mencari data warga/plat nomor. Tombol <strong>Tambah</strong>, <strong>Edit</strong>, dan <strong>Upload Excel</strong> terkunci khusus untuk Superuser.</p>
+                    <p class="text-amber-400/80 mt-0.5">Anda hanya dapat melihat dan mencari data warga/plat nomor. Tombol kelola terkunci khusus untuk Superuser.</p>
                 </div>
             </div>
 
-            <!-- Bento-Grid Dark Analytics: 6 Kartu Statistik -->
-            <section class="grid grid-cols-6 gap-3">
+            <!-- Bento-Grid Responsif: 2 Kolom di HP, 3 Kolom di Tablet, 6 Kolom di Laptop -->
+            <section class="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-6 gap-2.5 sm:gap-3">
                 
                 <!-- 1. Warga Aktif Card -->
-                <div class="dark-glass-card p-4 rounded-3xl hover:border-brand-500/40 transition duration-200">
+                <div class="dark-glass-card p-3 sm:p-4 rounded-2xl sm:rounded-3xl hover:border-brand-500/40 transition">
                     <div class="flex items-center justify-between">
-                        <span class="text-[11px] font-bold uppercase tracking-wider text-slate-300">Warga Aktif</span>
-                        <div class="w-8 h-8 rounded-xl bg-brand-950/70 border border-brand-500/30 text-brand-400 flex items-center justify-center text-xs shadow-inner">
+                        <span class="text-[10px] sm:text-[11px] font-bold uppercase tracking-wider text-slate-300">Warga Aktif</span>
+                        <div class="w-7 h-7 sm:w-8 sm:h-8 rounded-xl bg-brand-950/70 border border-brand-500/30 text-brand-400 flex items-center justify-center text-xs">
                             <i class="fa-solid fa-users"></i>
                         </div>
                     </div>
-                    <div class="mt-2.5 flex items-baseline gap-1.5">
-                        <h3 id="statTotal" class="text-2xl font-extrabold text-white tracking-tight">0</h3>
-                        <span class="text-xs font-semibold text-brand-400">Jiwa</span>
+                    <div class="mt-2 flex items-baseline gap-1">
+                        <h3 id="statTotal" class="text-xl sm:text-2xl font-extrabold text-white tracking-tight">0</h3>
+                        <span class="text-[10px] sm:text-xs font-semibold text-brand-400">Jiwa</span>
                     </div>
-                    <div class="mt-2.5 pt-2.5 border-t border-slate-800 flex items-center justify-between text-[11px] text-slate-400 font-medium">
-                        <span>Pria: <strong id="statLaki" class="text-slate-200">0</strong></span>
-                        <span>Wanita: <strong id="statPerempuan" class="text-slate-200">0</strong></span>
+                    <div class="mt-2 pt-2 border-t border-slate-800 flex items-center justify-between text-[10px] sm:text-[11px] text-slate-400 font-medium">
+                        <span>L: <strong id="statLaki" class="text-slate-200">0</strong></span>
+                        <span>P: <strong id="statPerempuan" class="text-slate-200">0</strong></span>
                     </div>
                 </div>
 
                 <!-- 2. Status Rumah / KK -->
-                <div class="dark-glass-card p-4 rounded-3xl hover:border-indigo-500/40 transition duration-200 bg-indigo-950/15">
+                <div class="dark-glass-card p-3 sm:p-4 rounded-2xl sm:rounded-3xl hover:border-indigo-500/40 transition bg-indigo-950/15">
                     <div class="flex items-center justify-between">
-                        <span class="text-[11px] font-bold uppercase tracking-wider text-indigo-300">Hunian (Per KK)</span>
-                        <div class="w-8 h-8 rounded-xl bg-indigo-950/80 border border-indigo-500/30 text-indigo-400 flex items-center justify-center text-xs shadow-inner">
+                        <span class="text-[10px] sm:text-[11px] font-bold uppercase tracking-wider text-indigo-300">Hunian (KK)</span>
+                        <div class="w-7 h-7 sm:w-8 sm:h-8 rounded-xl bg-indigo-950/80 border border-indigo-500/30 text-indigo-400 flex items-center justify-center text-xs">
                             <i class="fa-solid fa-people-roof"></i>
                         </div>
                     </div>
-                    <div class="mt-2 flex items-center gap-2">
-                        <div class="flex items-baseline gap-1" title="Kepala Keluarga Tetap (Pemilik)">
-                            <span id="statKKTetap" class="text-2xl font-extrabold text-emerald-400 tracking-tight">0</span>
-                            <span class="text-[10px] font-bold uppercase text-emerald-500">Tetap</span>
+                    <div class="mt-2 flex items-center gap-1.5">
+                        <div class="flex items-baseline gap-1" title="KK Tetap">
+                            <span id="statKKTetap" class="text-xl sm:text-2xl font-extrabold text-emerald-400 tracking-tight">0</span>
+                            <span class="text-[9px] font-bold text-emerald-500">Tetap</span>
                         </div>
-                        <span class="text-slate-600 font-bold text-sm">/</span>
-                        <div class="flex items-baseline gap-1" title="Kepala Keluarga Kontrak/Sewa">
-                            <span id="statKKKontrak" class="text-2xl font-extrabold text-amber-400 tracking-tight">0</span>
-                            <span class="text-[10px] font-bold uppercase text-amber-500">Sewa</span>
+                        <span class="text-slate-600 font-bold text-xs">/</span>
+                        <div class="flex items-baseline gap-1" title="KK Kontrak/Sewa">
+                            <span id="statKKKontrak" class="text-xl sm:text-2xl font-extrabold text-amber-400 tracking-tight">0</span>
+                            <span class="text-[9px] font-bold text-amber-500">Sewa</span>
                         </div>
                     </div>
-                    <div class="mt-2.5 pt-2.5 border-t border-slate-800/80 flex items-center justify-between text-[11px] text-slate-400 font-medium">
-                        <span>Total Terhuni: <strong id="statKKTotal" class="text-indigo-300">0</strong> KK</span>
-                        <span class="text-emerald-400 font-semibold text-[10px]">100% Valid</span>
+                    <div class="mt-2 pt-2 border-t border-slate-800/80 flex items-center justify-between text-[10px] sm:text-[11px] text-slate-400 font-medium">
+                        <span>Total: <strong id="statKKTotal" class="text-indigo-300">0</strong> KK</span>
                     </div>
                 </div>
 
                 <!-- 3. Warga Tidak Aktif Card -->
-                <div class="dark-glass-card p-4 rounded-3xl hover:border-rose-500/40 transition duration-200 bg-rose-950/15">
+                <div class="dark-glass-card p-3 sm:p-4 rounded-2xl sm:rounded-3xl hover:border-rose-500/40 transition bg-rose-950/15">
                     <div class="flex items-center justify-between">
-                        <span class="text-[11px] font-bold uppercase tracking-wider text-rose-300">Warga Nonaktif</span>
-                        <div class="w-8 h-8 rounded-xl bg-rose-950/80 border border-rose-500/30 text-rose-400 flex items-center justify-center text-xs shadow-inner">
+                        <span class="text-[10px] sm:text-[11px] font-bold uppercase tracking-wider text-rose-300">Nonaktif</span>
+                        <div class="w-7 h-7 sm:w-8 sm:h-8 rounded-xl bg-rose-950/80 border border-rose-500/30 text-rose-400 flex items-center justify-center text-xs">
                             <i class="fa-solid fa-user-xmark"></i>
                         </div>
                     </div>
-                    <div class="mt-2.5 flex items-baseline gap-1.5">
-                        <h3 id="statInactive" class="text-2xl font-extrabold text-rose-200 tracking-tight">0</h3>
-                        <span class="text-xs font-semibold text-rose-400">Jiwa</span>
+                    <div class="mt-2 flex items-baseline gap-1">
+                        <h3 id="statInactive" class="text-xl sm:text-2xl font-extrabold text-rose-200 tracking-tight">0</h3>
+                        <span class="text-[10px] sm:text-xs font-semibold text-rose-400">Jiwa</span>
                     </div>
-                    <div class="mt-2.5 pt-2.5 border-t border-slate-800/80 flex items-center justify-between text-[11px] text-slate-400 font-medium">
-                        <span class="flex items-center gap-1" title="Warga Pindah Keluar">
-                            <i class="fa-solid fa-person-walking-arrow-right text-slate-400 text-[10px]"></i> Pindah: <strong id="statPindah" class="text-slate-200">0</strong>
-                        </span>
-                        <span class="flex items-center gap-1" title="Warga Meninggal Dunia">
-                            <i class="fa-solid fa-dove text-rose-400 text-[10px]"></i> Wafat: <strong id="statMeninggal" class="text-rose-300">0</strong>
-                        </span>
+                    <div class="mt-2 pt-2 border-t border-slate-800/80 flex items-center justify-between text-[10px] sm:text-[11px] text-slate-400 font-medium">
+                        <span>Pindah: <strong id="statPindah" class="text-slate-200">0</strong></span>
+                        <span>Wafat: <strong id="statMeninggal" class="text-rose-300">0</strong></span>
                     </div>
                 </div>
 
                 <!-- 4. Petugas Keamanan / Security Card -->
-                <div class="dark-glass-card p-4 rounded-3xl hover:border-teal-400/50 transition duration-200 bg-teal-950/20 cursor-pointer group" onclick="openSecurityModal()" title="Klik untuk lihat jadwal & kontak petugas security">
+                <div class="dark-glass-card p-3 sm:p-4 rounded-2xl sm:rounded-3xl hover:border-teal-400/50 transition bg-teal-950/20 cursor-pointer group" onclick="openSecurityModal()" title="Klik untuk lihat jadwal & kontak petugas security">
                     <div class="flex items-center justify-between">
-                        <span class="text-[11px] font-bold uppercase tracking-wider text-teal-300 group-hover:text-teal-200 flex items-center gap-1">
-                            Petugas Security <i class="fa-solid fa-arrow-up-right-from-square text-[9px] opacity-70"></i>
+                        <span class="text-[10px] sm:text-[11px] font-bold uppercase tracking-wider text-teal-300 flex items-center gap-1">
+                            Security <i class="fa-solid fa-arrow-up-right-from-square text-[8px] opacity-70"></i>
                         </span>
-                        <div class="w-8 h-8 rounded-xl bg-teal-950/90 border border-teal-500/40 text-teal-300 flex items-center justify-center text-xs shadow-inner group-hover:scale-105 transition">
+                        <div class="w-7 h-7 sm:w-8 sm:h-8 rounded-xl bg-teal-950/90 border border-teal-500/40 text-teal-300 flex items-center justify-center text-xs group-hover:scale-105 transition">
                             <i class="fa-solid fa-shield-halved"></i>
                         </div>
                     </div>
-                    <div class="mt-2.5 flex items-baseline gap-1.5">
-                        <h3 id="statSecurity" class="text-2xl font-extrabold text-teal-300 tracking-tight">0</h3>
-                        <span class="text-xs font-semibold text-teal-400">Personil</span>
+                    <div class="mt-2 flex items-baseline gap-1">
+                        <h3 id="statSecurity" class="text-xl sm:text-2xl font-extrabold text-teal-300 tracking-tight">0</h3>
+                        <span class="text-[10px] sm:text-xs font-semibold text-teal-400">Org</span>
                     </div>
-                    <div class="mt-2.5 pt-2.5 border-t border-slate-800/80 flex items-center justify-between text-[11px] text-slate-400 font-medium">
-                        <span class="flex items-center gap-1 text-teal-400">
-                            <i class="fa-solid fa-sun text-[10px]"></i> Pagi: <strong id="statSecPagi" class="text-slate-200">0</strong>
-                        </span>
-                        <span class="flex items-center gap-1 text-indigo-400">
-                            <i class="fa-solid fa-moon text-[10px]"></i> Malam: <strong id="statSecMalam" class="text-slate-200">0</strong>
-                        </span>
+                    <div class="mt-2 pt-2 border-t border-slate-800/80 flex items-center justify-between text-[10px] sm:text-[11px] text-slate-400 font-medium">
+                        <span>Pagi: <strong id="statSecPagi" class="text-slate-200">0</strong></span>
+                        <span>Malam: <strong id="statSecMalam" class="text-slate-200">0</strong></span>
                     </div>
                 </div>
 
                 <!-- 5. Mobil Card -->
-                <div class="dark-glass-card p-4 rounded-3xl hover:border-sky-500/40 transition duration-200">
+                <div class="dark-glass-card p-3 sm:p-4 rounded-2xl sm:rounded-3xl hover:border-sky-500/40 transition">
                     <div class="flex items-center justify-between">
-                        <span class="text-[11px] font-bold uppercase tracking-wider text-sky-400">Mobil Terdaftar</span>
-                        <div class="w-8 h-8 rounded-xl bg-sky-950/60 border border-sky-500/20 text-sky-400 flex items-center justify-center text-xs shadow-inner">
+                        <span class="text-[10px] sm:text-[11px] font-bold uppercase tracking-wider text-sky-400">Mobil</span>
+                        <div class="w-7 h-7 sm:w-8 sm:h-8 rounded-xl bg-sky-950/60 border border-sky-500/20 text-sky-400 flex items-center justify-center text-xs">
                             <i class="fa-solid fa-car-side"></i>
                         </div>
                     </div>
-                    <div class="mt-2.5 flex items-baseline gap-1.5">
-                        <h3 id="statMobil" class="text-2xl font-extrabold text-white tracking-tight">0</h3>
-                        <span class="text-xs font-semibold text-sky-400">Unit Mobil</span>
+                    <div class="mt-2 flex items-baseline gap-1">
+                        <h3 id="statMobil" class="text-xl sm:text-2xl font-extrabold text-white tracking-tight">0</h3>
+                        <span class="text-[10px] sm:text-xs font-semibold text-sky-400">Unit</span>
                     </div>
-                    <div class="mt-2.5 pt-2.5 border-t border-slate-800 text-[11px] text-sky-300 font-medium flex items-center gap-1">
-                        <i class="fa-solid fa-square-parking text-sky-400 text-[10px]"></i> Akses Gerbang R4
+                    <div class="mt-2 pt-2 border-t border-slate-800 text-[10px] sm:text-[11px] text-sky-300 font-medium flex items-center gap-1">
+                        <i class="fa-solid fa-square-parking text-sky-400 text-[9px]"></i> R4 Terdaftar
                     </div>
                 </div>
 
                 <!-- 6. Motor Card -->
-                <div class="dark-glass-card p-4 rounded-3xl hover:border-amber-500/40 transition duration-200">
+                <div class="dark-glass-card p-3 sm:p-4 rounded-2xl sm:rounded-3xl hover:border-amber-500/40 transition">
                     <div class="flex items-center justify-between">
-                        <span class="text-[11px] font-bold uppercase tracking-wider text-amber-400">Motor Terdaftar</span>
-                        <div class="w-8 h-8 rounded-xl bg-amber-950/60 border border-amber-500/20 text-amber-400 flex items-center justify-center text-xs shadow-inner">
+                        <span class="text-[10px] sm:text-[11px] font-bold uppercase tracking-wider text-amber-400">Motor</span>
+                        <div class="w-7 h-7 sm:w-8 sm:h-8 rounded-xl bg-amber-950/60 border border-amber-500/20 text-amber-400 flex items-center justify-center text-xs">
                             <i class="fa-solid fa-motorcycle"></i>
                         </div>
                     </div>
-                    <div class="mt-2.5 flex items-baseline gap-1.5">
-                        <h3 id="statMotor" class="text-2xl font-extrabold text-white tracking-tight">0</h3>
-                        <span class="text-xs font-semibold text-amber-400">Unit Motor</span>
+                    <div class="mt-2 flex items-baseline gap-1">
+                        <h3 id="statMotor" class="text-xl sm:text-2xl font-extrabold text-white tracking-tight">0</h3>
+                        <span class="text-[10px] sm:text-xs font-semibold text-amber-400">Unit</span>
                     </div>
-                    <div class="mt-2.5 pt-2.5 border-t border-slate-800 text-[11px] text-amber-300 font-medium flex items-center gap-1">
-                        <i class="fa-solid fa-gauge-high text-amber-400 text-[10px]"></i> Akses Gerbang R2
+                    <div class="mt-2 pt-2 border-t border-slate-800 text-[10px] sm:text-[11px] text-amber-300 font-medium flex items-center gap-1">
+                        <i class="fa-solid fa-gauge-high text-amber-400 text-[9px]"></i> R2 Terdaftar
                     </div>
                 </div>
 
             </section>
 
-            <!-- TOOLBAR PENCARIAN & AKSI -->
-            <div class="dark-glass-card p-5 rounded-3xl space-y-3.5 shadow-2xl border border-emerald-500/25">
+            <!-- TOOLBAR PENCARIAN & AKSI RESPONDIF -->
+            <div class="dark-glass-card p-4 sm:p-5 rounded-3xl space-y-3.5 shadow-2xl border border-emerald-500/25">
                 
-                <div class="flex items-center gap-3">
-                    <div class="relative flex-1 min-w-[500px]">
-                        <span class="absolute inset-y-0 left-0 pl-4 flex items-center text-emerald-400 pointer-events-none">
-                            <i class="fa-solid fa-magnifying-glass text-base"></i>
+                <div class="flex flex-col lg:flex-row items-stretch lg:items-center gap-2.5 sm:gap-3">
+                    <div class="relative flex-1">
+                        <span class="absolute inset-y-0 left-0 pl-3.5 sm:pl-4 flex items-center text-emerald-400 pointer-events-none">
+                            <i class="fa-solid fa-magnifying-glass text-sm sm:text-base"></i>
                         </span>
                         <input 
                             type="text" 
                             id="searchInput" 
-                            placeholder="Ketik di sini untuk mencari nama warga, jalan, nomor blok, NIK, kontak, atau plat kendaraan..." 
-                            class="w-full pl-12 pr-12 py-3 bg-slate-900/95 border-2 border-emerald-800/80 rounded-2xl text-sm font-semibold text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-brand-400 focus:border-brand-400 transition shadow-inner"
+                            placeholder="Cari nama, blok, jalan, plat..." 
+                            class="w-full pl-10 sm:pl-12 pr-10 sm:pr-12 py-2.5 sm:py-3 bg-slate-900/95 border-2 border-emerald-800/80 rounded-2xl text-xs sm:text-sm font-semibold text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-brand-400 focus:border-brand-400 transition"
                             oninput="filterResidents()"
                         >
                         <button 
                             type="button" 
                             id="clearSearchBtn" 
                             onclick="clearSearchInput()" 
-                            class="absolute inset-y-0 right-0 pr-4 flex items-center text-slate-400 hover:text-white transition hidden"
+                            class="absolute inset-y-0 right-0 pr-3.5 sm:pr-4 flex items-center text-slate-400 hover:text-white transition hidden"
                             title="Hapus Pencarian"
                         >
-                            <i class="fa-solid fa-circle-xmark text-lg"></i>
+                            <i class="fa-solid fa-circle-xmark text-base"></i>
                         </button>
                     </div>
 
-                    <div class="w-56 shrink-0">
-                        <select id="filterStatus" onchange="filterResidents()" class="w-full px-3.5 py-3 bg-slate-900 border border-emerald-900/80 rounded-2xl text-xs font-bold text-slate-200 focus:outline-none focus:ring-2 focus:ring-brand-400 cursor-pointer">
-                            <option value="Semua">🔍 Semua Status Hunian</option>
-                            <option value="Aktif">🟢 Hanya Warga Aktif</option>
-                            <option value="TidakAktif">🔴 Hanya Warga Nonaktif</option>
-                            <option value="Tetap">🏡 Tetap (Pemilik)</option>
-                            <option value="Kontrak">📋 Kontrak / Sewa</option>
-                            <option value="Pindah">📦 Pindah Keluar</option>
-                            <option value="Meninggal">🕊️ Meninggal Dunia</option>
-                        </select>
-                    </div>
+                    <div class="grid grid-cols-2 lg:flex gap-2">
+                        <div class="w-full lg:w-52">
+                            <select id="filterStatus" onchange="filterResidents()" class="w-full px-3 py-2.5 sm:py-3 bg-slate-900 border border-emerald-900/80 rounded-2xl text-xs font-bold text-slate-200 focus:outline-none focus:ring-2 focus:ring-brand-400 cursor-pointer">
+                                <option value="Semua">🔍 Semua Status</option>
+                                <option value="Aktif">🟢 Warga Aktif</option>
+                                <option value="TidakAktif">🔴 Nonaktif</option>
+                                <option value="Tetap">🏡 Tetap (Pemilik)</option>
+                                <option value="Kontrak">📋 Kontrak/Sewa</option>
+                                <option value="Pindah">📦 Pindah</option>
+                                <option value="Meninggal">🕊️ Meninggal</option>
+                            </select>
+                        </div>
 
-                    <div class="w-48 shrink-0">
-                        <select id="filterKendaraan" onchange="filterResidents()" class="w-full px-3.5 py-3 bg-slate-900 border border-emerald-900/80 rounded-2xl text-xs font-bold text-slate-200 focus:outline-none focus:ring-2 focus:ring-brand-400 cursor-pointer">
-                            <option value="Semua">🚗 Semua Kendaraan</option>
-                            <option value="Mobil">🚘 Punya Mobil</option>
-                            <option value="Motor">🛵 Punya Motor</option>
-                        </select>
+                        <div class="w-full lg:w-44">
+                            <select id="filterKendaraan" onchange="filterResidents()" class="w-full px-3 py-2.5 sm:py-3 bg-slate-900 border border-emerald-900/80 rounded-2xl text-xs font-bold text-slate-200 focus:outline-none focus:ring-2 focus:ring-brand-400 cursor-pointer">
+                                <option value="Semua">🚗 Semua Kendaraan</option>
+                                <option value="Mobil">🚘 Punya Mobil</option>
+                                <option value="Motor">🛵 Punya Motor</option>
+                            </select>
+                        </div>
                     </div>
                 </div>
 
-                <div class="flex items-center justify-between pt-3 border-t border-slate-800/80">
-                    <div class="flex items-center gap-2">
-                        <span class="text-xs font-bold uppercase tracking-wider text-slate-400 mr-1 flex items-center gap-1.5">
-                            <i class="fa-solid fa-sliders text-emerald-400"></i> Alat Kelola:
-                        </span>
-
-                        <button onclick="openSecurityModal()" class="px-3.5 py-2 bg-teal-950/70 hover:bg-teal-900/80 text-teal-300 border border-teal-700/60 text-xs font-bold rounded-xl transition flex items-center gap-1.5 shadow-sm" title="Lihat Petugas & Pos Satpam">
+                <div class="flex flex-wrap items-center justify-between gap-2.5 pt-3 border-t border-slate-800/80">
+                    <div class="flex flex-wrap items-center gap-1.5 sm:gap-2">
+                        <button onclick="openSecurityModal()" class="px-3 py-2 bg-teal-950/70 hover:bg-teal-900/80 text-teal-300 border border-teal-700/60 text-xs font-bold rounded-xl transition flex items-center gap-1.5">
                             <i class="fa-solid fa-shield-halved text-teal-400"></i>
-                            <span>Pos Security</span>
+                            <span>Security</span>
                         </button>
 
                         <button onclick="downloadExcelTemplate()" class="px-3 py-2 bg-slate-800/80 hover:bg-slate-700/80 text-slate-200 border border-slate-700/60 text-xs font-bold rounded-xl transition flex items-center gap-1.5" title="Unduh Format Contoh Excel">
                             <i class="fa-solid fa-download text-emerald-400"></i>
-                            <span>Format Template Excel</span>
+                            <span class="hidden sm:inline">Format Template</span>
                         </button>
 
-                        <button id="btnImportExcel" onclick="triggerExcelImport()" class="px-3.5 py-2 bg-emerald-950/80 hover:bg-emerald-900 border border-emerald-700/80 text-emerald-300 text-xs font-bold rounded-xl transition flex items-center gap-2 shadow-sm">
+                        <button id="btnImportExcel" onclick="triggerExcelImport()" class="px-3 py-2 bg-emerald-950/80 hover:bg-emerald-900 border border-emerald-700/80 text-emerald-300 text-xs font-bold rounded-xl transition flex items-center gap-1.5">
                             <i class="fa-solid fa-file-excel text-emerald-400"></i>
-                            <span>Upload File Excel</span>
+                            <span>Upload Excel</span>
                         </button>
 
-                        <button onclick="exportToCSV()" class="px-3.5 py-2 bg-slate-800/80 hover:bg-slate-700/80 text-slate-200 border border-slate-700/60 text-xs font-bold rounded-xl transition flex items-center gap-1.5">
+                        <button onclick="exportToCSV()" class="px-3 py-2 bg-slate-800/80 hover:bg-slate-700/80 text-slate-200 border border-slate-700/60 text-xs font-bold rounded-xl transition flex items-center gap-1.5">
                             <i class="fa-solid fa-file-export text-brand-400"></i>
-                            <span>Download CSV</span>
+                            <span class="hidden sm:inline">CSV</span>
                         </button>
                     </div>
 
-                    <div>
-                        <button id="btnAddResident" onclick="openModal()" class="px-5 py-2.5 bg-gradient-to-r from-brand-600 via-teal-600 to-emerald-500 hover:from-brand-500 hover:to-emerald-400 text-white text-xs font-bold rounded-xl shadow-lg shadow-brand-500/25 transition flex items-center gap-2">
+                    <div class="w-full sm:w-auto">
+                        <button id="btnAddResident" onclick="openModal()" class="w-full sm:w-auto px-4 py-2 bg-gradient-to-r from-brand-600 via-teal-600 to-emerald-500 hover:from-brand-500 hover:to-emerald-400 text-white text-xs font-bold rounded-xl shadow-lg shadow-brand-500/25 transition flex items-center justify-center gap-2">
                             <i class="fa-solid fa-user-plus text-sm"></i>
-                            <span>Tambah Warga Baru</span>
+                            <span>Tambah Warga</span>
                         </button>
                     </div>
                 </div>
 
             </div>
 
-            <!-- TABEL DATA WARGA -->
+            <!-- TABEL DATA WARGA (HORIZONTAL SCROLL RAPI DI HP) -->
             <div class="dark-glass-card rounded-3xl overflow-hidden shadow-2xl border border-emerald-500/20">
                 <div class="overflow-x-auto w-full">
-                    <table class="w-full text-left text-sm text-slate-300 min-w-[1300px]">
+                    <table class="w-full text-left text-sm text-slate-300 min-w-[1000px]">
                         <thead class="bg-slate-900/95 text-emerald-300/80 text-[11px] uppercase font-bold tracking-wider border-b border-slate-800">
                             <tr>
-                                <th class="px-4 py-4 text-center w-12">No</th>
-                                <th class="px-5 py-4 w-[230px]">Warga (Nama & NIK)</th>
-                                <th class="px-4 py-4 w-[180px]">Nama Jalan</th>
-                                <th class="px-4 py-4 w-[140px]">Blok / Rumah</th>
-                                <th class="px-3 py-4 text-center w-16">Gender</th>
-                                <th class="px-4 py-4 w-[140px]">Hubungan KK</th>
-                                <th class="px-4 py-4 w-[140px]">Status Hunian</th>
-                                <th class="px-5 py-4 w-[330px]">Garasi & Plat Nomor</th>
-                                <th class="px-4 py-4 w-[180px]">Kontak HP</th>
-                                <th class="px-4 py-4 text-center w-24 sticky right-0 bg-slate-900/95 backdrop-blur-md z-20 border-l border-slate-800 shadow-[-10px_0_15px_rgba(0,0,0,0.5)]">Aksi</th>
+                                <th class="px-3 py-3.5 text-center w-12">No</th>
+                                <th class="px-4 py-3.5 w-[220px]">Warga (Nama & NIK)</th>
+                                <th class="px-4 py-3.5 w-[160px]">Nama Jalan</th>
+                                <th class="px-3 py-3.5 w-[130px]">Blok / Rumah</th>
+                                <th class="px-2 py-3.5 text-center w-14">Gender</th>
+                                <th class="px-3 py-3.5 w-[130px]">Hubungan KK</th>
+                                <th class="px-3 py-3.5 w-[130px]">Status Hunian</th>
+                                <th class="px-4 py-3.5 w-[300px]">Garasi & Plat</th>
+                                <th class="px-3 py-3.5 w-[170px]">Kontak HP</th>
+                                <th class="px-3 py-3.5 text-center w-20 sticky right-0 bg-slate-900/95 backdrop-blur-md z-20 border-l border-slate-800 shadow-[-8px_0_12px_rgba(0,0,0,0.5)]">Aksi</th>
                             </tr>
                         </thead>
                         <tbody id="residentTableBody" class="divide-y divide-slate-800/80">
@@ -526,7 +468,7 @@
                     </table>
                 </div>
 
-                <div id="emptyState" class="hidden py-16 text-center">
+                <div id="emptyState" class="hidden py-14 text-center">
                     <i class="fa-regular fa-folder-open text-3xl text-emerald-500/50 mb-2"></i>
                     <h4 class="text-sm font-bold text-slate-300">Tidak Ada Data Ditemukan</h4>
                     <p class="text-xs text-slate-500 mt-1">Coba kata kunci lain atau ubah pilihan filter status.</p>
@@ -536,15 +478,15 @@
         </main>
 
         <!-- Footer Lisensi Davi Nur Alim -->
-        <footer class="border-t border-emerald-500/20 py-8 mt-12 bg-slate-950/80">
-            <div class="w-[1240px] mx-auto px-6 text-center space-y-3">
+        <footer class="border-t border-emerald-500/20 py-6 mt-8 bg-slate-950/80">
+            <div class="max-w-7xl mx-auto px-4 text-center space-y-2.5">
                 <p class="text-xs text-slate-400 font-medium tracking-wide">
                     Sistem Manajemen Kependudukan, Administrasi & Akses Kendaraan &copy; 2026 Cluster Bumi Asri
                 </p>
                 <div>
-                    <div class="inline-flex items-center gap-2.5 px-6 py-2.5 bg-slate-900/95 rounded-2xl border border-brand-500/40 text-sm text-slate-200 font-semibold shadow-2xl">
-                        <i class="fa-solid fa-code text-brand-400 text-base"></i>
-                        <span>Dibuat & Dilisensikan secara resmi oleh: <strong class="text-white font-extrabold text-base tracking-wide bg-gradient-to-r from-brand-300 via-emerald-300 to-teal-200 bg-clip-text text-transparent ml-1">Davi Nur Alim</strong></span>
+                    <div class="inline-flex items-center gap-2 px-4 py-2 bg-slate-900/95 rounded-2xl border border-brand-500/40 text-xs sm:text-sm text-slate-200 font-semibold shadow-xl">
+                        <i class="fa-solid fa-code text-brand-400"></i>
+                        <span>Dilisensikan resmi oleh: <strong class="text-white font-extrabold tracking-wide bg-gradient-to-r from-brand-300 via-emerald-300 to-teal-200 bg-clip-text text-transparent ml-1">Davi Nur Alim</strong></span>
                     </div>
                 </div>
             </div>
@@ -553,64 +495,64 @@
 
 
     <!-- ================= MODAL TAMBAH & EDIT WARGA ================= -->
-    <div id="residentModal" class="fixed inset-0 bg-black/80 backdrop-blur-md z-50 flex items-center justify-center p-4 hidden">
-        <div class="bg-slate-900 text-slate-100 rounded-3xl shadow-2xl w-[600px] overflow-hidden border border-emerald-500/20">
+    <div id="residentModal" class="fixed inset-0 bg-black/80 backdrop-blur-md z-50 flex items-center justify-center p-3 sm:p-4 hidden">
+        <div class="bg-slate-900 text-slate-100 rounded-3xl shadow-2xl w-full max-w-[560px] overflow-hidden border border-emerald-500/20 max-h-[92vh] flex flex-col">
             
-            <div class="bg-gradient-to-r from-brand-700 to-teal-700 px-6 py-4 flex justify-between items-center text-white">
+            <div class="bg-gradient-to-r from-brand-700 to-teal-700 px-5 py-3.5 flex justify-between items-center text-white shrink-0">
                 <div class="flex items-center gap-2.5">
-                    <i id="modalIcon" class="fa-solid fa-user-plus text-base"></i>
-                    <h3 id="modalTitle" class="font-bold text-base">Registrasi Warga & Kendaraan</h3>
+                    <i id="modalIcon" class="fa-solid fa-user-plus text-sm"></i>
+                    <h3 id="modalTitle" class="font-bold text-sm sm:text-base">Registrasi Warga & Kendaraan</h3>
                 </div>
                 <button onclick="closeModal()" class="w-8 h-8 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center transition">
                     <i class="fa-solid fa-xmark text-sm"></i>
                 </button>
             </div>
 
-            <form id="residentForm" onsubmit="saveResident(event)" class="p-6 space-y-4 max-h-[82vh] overflow-y-auto">
+            <form id="residentForm" onsubmit="saveResident(event)" class="p-5 space-y-3.5 overflow-y-auto flex-1">
                 <input type="hidden" id="editResidentId">
 
                 <div>
-                    <label class="block text-xs font-bold uppercase tracking-wider text-slate-400 mb-1">Nama Lengkap *</label>
-                    <input type="text" id="nama" required class="w-full px-3.5 py-2.5 bg-slate-800/80 border border-slate-700 rounded-xl text-sm text-white focus:ring-2 focus:ring-brand-500 focus:outline-none" placeholder="Contoh: Budi Santoso">
+                    <label class="block text-[11px] font-bold uppercase tracking-wider text-slate-400 mb-1">Nama Lengkap *</label>
+                    <input type="text" id="nama" required class="w-full px-3 py-2 bg-slate-800/80 border border-slate-700 rounded-xl text-xs sm:text-sm text-white focus:ring-2 focus:ring-brand-500 focus:outline-none" placeholder="Contoh: Budi Santoso">
                 </div>
 
-                <div class="grid grid-cols-2 gap-3">
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
                     <div>
-                        <label class="block text-xs font-bold uppercase tracking-wider text-slate-400 mb-1">NIK (16 Digit) *</label>
-                        <input type="text" id="nik" maxlength="16" required class="w-full px-3.5 py-2.5 bg-slate-800/80 border border-slate-700 rounded-xl text-sm text-white focus:ring-2 focus:ring-brand-500 focus:outline-none font-mono" placeholder="3201xxxxxxxxxxxx">
+                        <label class="block text-[11px] font-bold uppercase tracking-wider text-slate-400 mb-1">NIK (16 Digit) *</label>
+                        <input type="text" id="nik" maxlength="16" required class="w-full px-3 py-2 bg-slate-800/80 border border-slate-700 rounded-xl text-xs sm:text-sm text-white focus:ring-2 focus:ring-brand-500 focus:outline-none font-mono" placeholder="3201xxxxxxxxxxxx">
                     </div>
                     <div>
-                        <label class="block text-xs font-bold uppercase tracking-wider text-slate-400 mb-1">No. HP / WhatsApp</label>
-                        <input type="tel" id="kontak" class="w-full px-3.5 py-2.5 bg-slate-800/80 border border-slate-700 rounded-xl text-sm text-white focus:ring-2 focus:ring-brand-500 focus:outline-none" placeholder="Contoh: 081234567890">
+                        <label class="block text-[11px] font-bold uppercase tracking-wider text-slate-400 mb-1">No. HP / WhatsApp</label>
+                        <input type="tel" id="kontak" class="w-full px-3 py-2 bg-slate-800/80 border border-slate-700 rounded-xl text-xs sm:text-sm text-white focus:ring-2 focus:ring-brand-500 focus:outline-none" placeholder="Contoh: 081234567890">
                     </div>
                 </div>
 
-                <div class="grid grid-cols-2 gap-3 bg-slate-950/60 p-3.5 rounded-2xl border border-slate-800/90">
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5 bg-slate-950/60 p-3 rounded-2xl border border-slate-800/90">
                     <div>
-                        <label class="block text-xs font-bold uppercase tracking-wider text-emerald-400 mb-1 flex items-center gap-1">
-                            <i class="fa-solid fa-road text-[11px]"></i> Nama Jalan *
+                        <label class="block text-[11px] font-bold uppercase tracking-wider text-emerald-400 mb-1 flex items-center gap-1">
+                            <i class="fa-solid fa-road text-[10px]"></i> Nama Jalan *
                         </label>
-                        <input type="text" id="jalan" required class="w-full px-3.5 py-2.5 bg-slate-900 border border-slate-700 rounded-xl text-sm text-white focus:ring-2 focus:ring-brand-500 focus:outline-none" placeholder="Contoh: Jl. Asri Raya / Jl. Mawar 2">
+                        <input type="text" id="jalan" required class="w-full px-3 py-2 bg-slate-900 border border-slate-700 rounded-xl text-xs sm:text-sm text-white focus:ring-2 focus:ring-brand-500 focus:outline-none" placeholder="Contoh: Jl. Asri Raya Utama">
                     </div>
                     <div>
-                        <label class="block text-xs font-bold uppercase tracking-wider text-emerald-400 mb-1 flex items-center gap-1">
-                            <i class="fa-solid fa-house-chimney text-[11px]"></i> Blok / Nomor Rumah *
+                        <label class="block text-[11px] font-bold uppercase tracking-wider text-emerald-400 mb-1 flex items-center gap-1">
+                            <i class="fa-solid fa-house-chimney text-[10px]"></i> Blok / Rumah *
                         </label>
-                        <input type="text" id="blok" required class="w-full px-3.5 py-2.5 bg-slate-900 border border-slate-700 rounded-xl text-sm text-white focus:ring-2 focus:ring-brand-500 focus:outline-none" placeholder="Contoh: Blok A1 No. 05">
+                        <input type="text" id="blok" required class="w-full px-3 py-2 bg-slate-900 border border-slate-700 rounded-xl text-xs sm:text-sm text-white focus:ring-2 focus:ring-brand-500 focus:outline-none" placeholder="Contoh: Blok A1 No. 05">
                     </div>
                 </div>
 
-                <div class="grid grid-cols-2 gap-3">
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
                     <div>
-                        <label class="block text-xs font-bold uppercase tracking-wider text-slate-400 mb-1">Jenis Kelamin *</label>
-                        <select id="gender" required class="w-full px-3.5 py-2.5 bg-slate-800/80 border border-slate-700 rounded-xl text-sm text-white focus:ring-2 focus:ring-brand-500 focus:outline-none font-medium">
+                        <label class="block text-[11px] font-bold uppercase tracking-wider text-slate-400 mb-1">Jenis Kelamin *</label>
+                        <select id="gender" required class="w-full px-3 py-2 bg-slate-800/80 border border-slate-700 rounded-xl text-xs sm:text-sm text-white focus:ring-2 focus:ring-brand-500 focus:outline-none font-medium">
                             <option value="L">Laki-laki (L)</option>
                             <option value="P">Perempuan (P)</option>
                         </select>
                     </div>
                     <div>
-                        <label class="block text-xs font-bold uppercase tracking-wider text-slate-400 mb-1">Hubungan Keluarga *</label>
-                        <select id="hubungan" required class="w-full px-3.5 py-2.5 bg-slate-800/80 border border-slate-700 rounded-xl text-sm text-white focus:ring-2 focus:ring-brand-500 focus:outline-none font-medium">
+                        <label class="block text-[11px] font-bold uppercase tracking-wider text-slate-400 mb-1">Hubungan Keluarga *</label>
+                        <select id="hubungan" required class="w-full px-3 py-2 bg-slate-800/80 border border-slate-700 rounded-xl text-xs sm:text-sm text-white focus:ring-2 focus:ring-brand-500 focus:outline-none font-medium">
                             <option value="Kepala Keluarga">Kepala Keluarga</option>
                             <option value="Istri">Istri</option>
                             <option value="Anak">Anak</option>
@@ -620,8 +562,8 @@
                 </div>
 
                 <div>
-                    <label class="block text-xs font-bold uppercase tracking-wider text-slate-400 mb-1">Status Kependudukan / Hunian *</label>
-                    <select id="statusHunian" required class="w-full px-3.5 py-2.5 bg-slate-800/80 border border-slate-700 rounded-xl text-sm text-white focus:ring-2 focus:ring-brand-500 focus:outline-none font-medium">
+                    <label class="block text-[11px] font-bold uppercase tracking-wider text-slate-400 mb-1">Status Kependudukan / Hunian *</label>
+                    <select id="statusHunian" required class="w-full px-3 py-2 bg-slate-800/80 border border-slate-700 rounded-xl text-xs sm:text-sm text-white focus:ring-2 focus:ring-brand-500 focus:outline-none font-medium">
                         <option value="Tetap (Pemilik)">Tetap (Pemilik)</option>
                         <option value="Kontrak / Sewa">Kontrak / Sewa</option>
                         <option value="Pindah Keluar">Pindah Keluar</option>
@@ -629,41 +571,41 @@
                     </select>
                 </div>
 
-                <div class="pt-3 border-t border-slate-800">
-                    <div class="flex items-center justify-between mb-1.5">
-                        <h4 class="text-xs font-bold uppercase tracking-wider text-slate-300">Garasi & Plat Nomor Kendaraan</h4>
-                        <span class="text-[10px] text-brand-400 font-semibold bg-emerald-950/60 border border-brand-500/30 px-2 py-0.5 rounded-full"><i class="fa-solid fa-bolt"></i> Otomatis Terhitung</span>
+                <div class="pt-2.5 border-t border-slate-800">
+                    <div class="flex items-center justify-between mb-1">
+                        <h4 class="text-[11px] font-bold uppercase tracking-wider text-slate-300">Garasi & Plat Kendaraan</h4>
+                        <span class="text-[9px] text-brand-400 font-semibold bg-emerald-950/60 border border-brand-500/30 px-2 py-0.5 rounded-full"><i class="fa-solid fa-bolt"></i> Auto Hitung</span>
                     </div>
-                    <p class="text-[11px] text-slate-400 mb-2.5 italic">Pisahkan dengan koma jika lebih dari 1 kendaraan (Contoh: B 1234 ABC, D 5678 DEF)</p>
+                    <p class="text-[10px] text-slate-400 mb-2 italic">Pisahkan dengan koma jika lebih dari 1 kendaraan (Contoh: B 1234 ABC, D 5678 DEF)</p>
                     
-                    <div class="bg-slate-950/70 p-4 rounded-2xl border border-slate-800 space-y-3">
-                        <div class="space-y-1.5">
+                    <div class="bg-slate-950/70 p-3 rounded-2xl border border-slate-800 space-y-2.5">
+                        <div class="space-y-1">
                             <div class="flex items-center justify-between">
-                                <label class="text-xs font-bold text-sky-400 flex items-center gap-1.5"><i class="fa-solid fa-car text-sky-400"></i> Unit Mobil Terdaftar</label>
-                                <div class="flex items-center gap-1.5">
-                                    <input type="number" id="jmlMobil" min="0" value="0" readonly class="w-14 px-2 py-1 bg-slate-900 border border-slate-700 text-sky-300 rounded-lg text-xs font-bold text-center cursor-not-allowed">
-                                    <span class="text-xs text-slate-400 font-medium">Unit</span>
+                                <label class="text-[11px] font-bold text-sky-400 flex items-center gap-1"><i class="fa-solid fa-car text-sky-400"></i> Mobil Terdaftar</label>
+                                <div class="flex items-center gap-1">
+                                    <input type="number" id="jmlMobil" min="0" value="0" readonly class="w-12 px-1.5 py-0.5 bg-slate-900 border border-slate-700 text-sky-300 rounded-lg text-xs font-bold text-center cursor-not-allowed">
+                                    <span class="text-[10px] text-slate-400">Unit</span>
                                 </div>
                             </div>
-                            <input type="text" id="platMobil" oninput="syncVehicleCount('mobil')" class="w-full px-3 py-2 bg-slate-900 border border-slate-700 text-white rounded-xl text-xs uppercase font-plat focus:ring-2 focus:ring-brand-500 focus:outline-none" placeholder="Contoh: B 1425 BMA, D 1888 RT, B 3344 XYZ">
+                            <input type="text" id="platMobil" oninput="syncVehicleCount('mobil')" class="w-full px-3 py-2 bg-slate-900 border border-slate-700 text-white rounded-xl text-xs uppercase font-plat focus:ring-2 focus:ring-brand-500 focus:outline-none" placeholder="Contoh: B 1425 BMA, D 1888 RT">
                         </div>
 
-                        <div class="space-y-1.5">
+                        <div class="space-y-1">
                             <div class="flex items-center justify-between">
-                                <label class="text-xs font-bold text-amber-400 flex items-center gap-1.5"><i class="fa-solid fa-motorcycle text-amber-400"></i> Unit Motor Terdaftar</label>
-                                <div class="flex items-center gap-1.5">
-                                    <input type="number" id="jmlMotor" min="0" value="0" readonly class="w-14 px-2 py-1 bg-slate-900 border border-slate-700 text-amber-300 rounded-lg text-xs font-bold text-center cursor-not-allowed">
-                                    <span class="text-xs text-slate-400 font-medium">Unit</span>
+                                <label class="text-[11px] font-bold text-amber-400 flex items-center gap-1"><i class="fa-solid fa-motorcycle text-amber-400"></i> Motor Terdaftar</label>
+                                <div class="flex items-center gap-1">
+                                    <input type="number" id="jmlMotor" min="0" value="0" readonly class="w-12 px-1.5 py-0.5 bg-slate-900 border border-slate-700 text-amber-300 rounded-lg text-xs font-bold text-center cursor-not-allowed">
+                                    <span class="text-[10px] text-slate-400">Unit</span>
                                 </div>
                             </div>
-                            <input type="text" id="platMotor" oninput="syncVehicleCount('motor')" class="w-full px-3 py-2 bg-slate-900 border border-slate-700 text-white rounded-xl text-xs uppercase font-plat focus:ring-2 focus:ring-brand-500 focus:outline-none" placeholder="Contoh: B 6543 BMA, B 3321 XYZ, D 9901 KLM">
+                            <input type="text" id="platMotor" oninput="syncVehicleCount('motor')" class="w-full px-3 py-2 bg-slate-900 border border-slate-700 text-white rounded-xl text-xs uppercase font-plat focus:ring-2 focus:ring-brand-500 focus:outline-none" placeholder="Contoh: B 6543 BMA, B 3321 XYZ">
                         </div>
                     </div>
                 </div>
 
-                <div class="flex justify-end gap-2 pt-4 border-t border-slate-800">
-                    <button type="button" onclick="closeModal()" class="px-4 py-2.5 border border-slate-700 hover:bg-slate-800 text-slate-300 rounded-xl text-xs font-bold transition">Batal</button>
-                    <button type="submit" id="modalSubmitBtn" class="px-5 py-2.5 bg-brand-600 hover:bg-brand-500 text-white rounded-xl text-xs font-bold shadow-md shadow-brand-500/20 transition">Simpan ke Cloud</button>
+                <div class="flex justify-end gap-2 pt-3 border-t border-slate-800">
+                    <button type="button" onclick="closeModal()" class="px-4 py-2 border border-slate-700 hover:bg-slate-800 text-slate-300 rounded-xl text-xs font-bold transition">Batal</button>
+                    <button type="submit" id="modalSubmitBtn" class="px-4 py-2 bg-brand-600 hover:bg-brand-500 text-white rounded-xl text-xs font-bold transition">Simpan ke Cloud</button>
                 </div>
             </form>
         </div>
@@ -671,15 +613,15 @@
 
 
     <!-- ================= MODAL SECURITY ================= -->
-    <div id="securityModal" class="fixed inset-0 bg-black/80 backdrop-blur-md z-50 flex items-center justify-center p-4 hidden">
-        <div class="bg-slate-900 text-slate-100 rounded-3xl shadow-2xl w-[620px] overflow-hidden border border-emerald-500/20">
+    <div id="securityModal" class="fixed inset-0 bg-black/80 backdrop-blur-md z-50 flex items-center justify-center p-3 sm:p-4 hidden">
+        <div class="bg-slate-900 text-slate-100 rounded-3xl shadow-2xl w-full max-w-[580px] overflow-hidden border border-emerald-500/20 max-h-[90vh] flex flex-col">
             
-            <div class="bg-gradient-to-r from-teal-700 to-emerald-700 px-6 py-4 flex justify-between items-center text-white">
+            <div class="bg-gradient-to-r from-teal-700 to-emerald-700 px-5 py-3.5 flex justify-between items-center text-white shrink-0">
                 <div class="flex items-center gap-2.5">
-                    <i class="fa-solid fa-shield-halved text-base"></i>
+                    <i class="fa-solid fa-shield-halved text-sm sm:text-base"></i>
                     <div>
-                        <h3 class="font-bold text-base">Data Petugas Keamanan (Security)</h3>
-                        <p class="text-[11px] text-teal-200">Pos Komando & Penjagaan Gerbang Cluster Bumi Asri</p>
+                        <h3 class="font-bold text-sm sm:text-base">Data Petugas Security</h3>
+                        <p class="text-[10px] text-teal-200">Pos Penjagaan Gerbang Cluster Bumi Asri</p>
                     </div>
                 </div>
                 <button onclick="closeSecurityModal()" class="w-8 h-8 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center transition">
@@ -687,39 +629,39 @@
                 </button>
             </div>
 
-            <div class="p-6 space-y-4 max-h-[80vh] overflow-y-auto">
-                <div id="secAddFormContainer" class="p-4 rounded-2xl bg-slate-950/70 border border-slate-800 space-y-3 hidden">
-                    <h4 class="text-xs font-bold uppercase tracking-wider text-teal-400 flex items-center gap-1.5">
-                        <i class="fa-solid fa-user-shield text-xs"></i> Tambah Petugas Security Baru
+            <div class="p-5 space-y-3.5 overflow-y-auto flex-1">
+                <div id="secAddFormContainer" class="p-3.5 rounded-2xl bg-slate-950/70 border border-slate-800 space-y-2.5 hidden">
+                    <h4 class="text-[11px] font-bold uppercase tracking-wider text-teal-400 flex items-center gap-1.5">
+                        <i class="fa-solid fa-user-shield text-xs"></i> Tambah Personil Security
                     </h4>
-                    <form id="secForm" onsubmit="saveSecurity(event)" class="space-y-2.5">
-                        <div class="grid grid-cols-2 gap-2.5">
-                            <input type="text" id="secNama" required placeholder="Nama Petugas (misal: Pak Joko)" class="w-full px-3 py-2 bg-slate-900 border border-slate-700 rounded-xl text-xs text-white focus:outline-none focus:ring-1 focus:ring-teal-500">
-                            <input type="text" id="secPeran" required placeholder="Jabatan / Pos (misal: Danru / Pos Utama)" class="w-full px-3 py-2 bg-slate-900 border border-slate-700 rounded-xl text-xs text-white focus:outline-none focus:ring-1 focus:ring-teal-500">
+                    <form id="secForm" onsubmit="saveSecurity(event)" class="space-y-2">
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                            <input type="text" id="secNama" required placeholder="Nama Petugas (misal: Pak Joko)" class="w-full px-3 py-2 bg-slate-900 border border-slate-700 rounded-xl text-xs text-white focus:outline-none">
+                            <input type="text" id="secPeran" required placeholder="Jabatan/Pos (misal: Pos Utama)" class="w-full px-3 py-2 bg-slate-900 border border-slate-700 rounded-xl text-xs text-white focus:outline-none">
                         </div>
-                        <div class="grid grid-cols-2 gap-2.5">
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
                             <select id="secShift" required class="w-full px-3 py-2 bg-slate-900 border border-slate-700 rounded-xl text-xs text-white focus:outline-none font-medium">
                                 <option value="Shift Pagi (07.00 - 19.00)">Shift Pagi (07.00 - 19.00)</option>
                                 <option value="Shift Malam (19.00 - 07.00)">Shift Malam (19.00 - 07.00)</option>
                             </select>
-                            <input type="tel" id="secKontak" required placeholder="Nomor HP/WA (08xxx)" class="w-full px-3 py-2 bg-slate-900 border border-slate-700 rounded-xl text-xs text-white focus:outline-none focus:ring-1 focus:ring-teal-500">
+                            <input type="tel" id="secKontak" required placeholder="No HP/WA (08xxx)" class="w-full px-3 py-2 bg-slate-900 border border-slate-700 rounded-xl text-xs text-white focus:outline-none">
                         </div>
                         <div class="flex justify-end pt-1">
-                            <button type="submit" class="px-4 py-1.5 bg-teal-600 hover:bg-teal-500 text-white rounded-xl text-xs font-bold transition flex items-center gap-1">
-                                <i class="fa-solid fa-plus text-[10px]"></i> Tambah Personil
+                            <button type="submit" class="px-3.5 py-1.5 bg-teal-600 hover:bg-teal-500 text-white rounded-xl text-xs font-bold transition flex items-center gap-1">
+                                <i class="fa-solid fa-plus text-[10px]"></i> Tambah
                             </button>
                         </div>
                     </form>
                 </div>
 
-                <div class="space-y-2.5" id="securityListContainer">
+                <div class="space-y-2" id="securityListContainer">
                     <!-- Render via Firestore Real-Time -->
                 </div>
             </div>
 
-            <div class="px-6 py-3.5 bg-slate-950/80 border-t border-slate-800 flex justify-between items-center text-xs">
-                <span class="text-slate-400">Total Personil Siaga: <strong id="secModalTotal" class="text-teal-300">0</strong> Orang</span>
-                <button type="button" onclick="closeSecurityModal()" class="px-4 py-1.5 bg-slate-800 hover:bg-slate-700 text-slate-200 rounded-xl font-bold transition">Tutup</button>
+            <div class="px-5 py-3 bg-slate-950/80 border-t border-slate-800 flex justify-between items-center text-xs shrink-0">
+                <span class="text-slate-400">Total Personil: <strong id="secModalTotal" class="text-teal-300">0</strong> Orang</span>
+                <button type="button" onclick="closeSecurityModal()" class="px-3.5 py-1.5 bg-slate-800 hover:bg-slate-700 text-slate-200 rounded-xl font-bold transition">Tutup</button>
             </div>
         </div>
     </div>
@@ -728,7 +670,7 @@
     <!-- ================= JAVASCRIPT ================= -->
     <script>
         // Akun Login Pengurus & Warga
-        // Superuser sekarang: rt10 / rt10
+        // Superuser: rt10 / rt10 (wajib diketik manual)
         const ACCOUNTS = {
             'rt10': { pass: 'rt10', role: 'superuser', label: 'Superuser (RT 10)' },
             'warga': { pass: 'warga123', role: 'user', label: 'User Biasa' }
@@ -760,7 +702,7 @@
             appId: "1:683657017337:web:8ff49c3ee4218f1c3eaf28"
         };
 
-        // Inisialisasi Firebase & Firestore Database
+        // Inisialisasi Firebase & Firestore
         firebase.initializeApp(firebaseConfig);
         const db = firebase.firestore();
 
@@ -768,7 +710,7 @@
         let securities = [];
         let currentRole = sessionStorage.getItem('currentRole') || null;
 
-        // Toggle Lihat/Sembunyikan Sandi
+        // Toggle Lihat / Sembunyikan Password
         function togglePasswordVisibility() {
             const passInput = document.getElementById('passwordInput');
             const eyeIcon = document.getElementById('eyeIcon');
@@ -783,13 +725,11 @@
             }
         }
 
-        // Modal Lupa Sandi
-        function openForgotModal() {
-            document.getElementById('forgotModal').classList.remove('hidden');
-        }
-
-        function closeForgotModal() {
-            document.getElementById('forgotModal').classList.add('hidden');
+        // Bantuan Lupa Sandi Langsung ke WhatsApp 08979557890
+        function contactWhatsAppForgot() {
+            const pesan = encodeURIComponent("Halo Pengurus RT Cluster Bumi Asri, saya butuh bantuan terkait username dan password akun portal.");
+            const waUrl = `https://wa.me/628979557890?text=${pesan}`;
+            window.open(waUrl, '_blank');
         }
 
         // ================= LISTENER DATABASE REALTIME =================
@@ -895,7 +835,7 @@
         function showToast(msg, isSuccess = true) {
             const toast = document.getElementById('toast');
             document.getElementById('toastMsg').innerText = msg;
-            document.getElementById('toastIcon').className = isSuccess ? "fa-solid fa-circle-check text-brand-400 text-lg" : "fa-solid fa-triangle-exclamation text-rose-400 text-lg";
+            document.getElementById('toastIcon').className = isSuccess ? "fa-solid fa-circle-check text-brand-400 text-base shrink-0" : "fa-solid fa-triangle-exclamation text-rose-400 text-base shrink-0";
             toast.classList.remove('translate-y-[-160%]', 'opacity-0');
             setTimeout(() => toast.classList.add('translate-y-[-160%]', 'opacity-0'), 3200);
         }
@@ -913,8 +853,8 @@
                 dashboardView.classList.remove('hidden');
 
                 const isSuper = (currentRole === 'superuser');
-                userBadge.innerHTML = `<i class="fa-solid ${isSuper ? 'fa-crown text-amber-400' : 'fa-user text-blue-400'}"></i> <span>${isSuper ? 'Superuser (RT 10)' : 'User Warga'}</span>`;
-                userBadge.className = `flex items-center gap-2 text-xs font-bold px-3 py-1.5 rounded-2xl border ${isSuper ? 'bg-amber-950/40 border-amber-800 text-amber-300' : 'bg-blue-950/40 border-blue-800 text-blue-300'}`;
+                userBadge.innerHTML = `<i class="fa-solid ${isSuper ? 'fa-crown text-amber-400' : 'fa-user text-blue-400'}"></i> <span>${isSuper ? 'Superuser' : 'Warga'}</span>`;
+                userBadge.className = `flex items-center gap-1.5 text-xs font-bold px-3 py-1.5 rounded-xl border ${isSuper ? 'bg-amber-950/40 border-amber-800 text-amber-300' : 'bg-blue-950/40 border-blue-800 text-blue-300'}`;
 
                 if (isSuper) {
                     roleAlert.classList.add('hidden');
@@ -1043,13 +983,13 @@
                     
                     let statusBadge = '';
                     if (statusStr.includes('Tetap')) {
-                        statusBadge = `<span class="px-2.5 py-1 rounded-full bg-emerald-950/70 text-brand-300 border border-emerald-700/60 text-[11px] font-bold">${statusStr}</span>`;
+                        statusBadge = `<span class="px-2 py-0.5 rounded-full bg-emerald-950/70 text-brand-300 border border-emerald-700/60 text-[10px] font-bold whitespace-nowrap">${statusStr}</span>`;
                     } else if (statusStr.includes('Kontrak') || statusStr.includes('Sewa')) {
-                        statusBadge = `<span class="px-2.5 py-1 rounded-full bg-amber-950/70 text-amber-300 border border-amber-700/60 text-[11px] font-bold">${statusStr}</span>`;
+                        statusBadge = `<span class="px-2 py-0.5 rounded-full bg-amber-950/70 text-amber-300 border border-amber-700/60 text-[10px] font-bold whitespace-nowrap">${statusStr}</span>`;
                     } else if (statusStr.includes('Pindah')) {
-                        statusBadge = `<span class="px-2.5 py-1 rounded-full bg-slate-800 text-slate-300 border border-slate-700 text-[11px] font-bold flex items-center gap-1 w-max"><i class="fa-solid fa-person-walking-arrow-right text-slate-400"></i> Pindah</span>`;
+                        statusBadge = `<span class="px-2 py-0.5 rounded-full bg-slate-800 text-slate-300 border border-slate-700 text-[10px] font-bold flex items-center gap-1 w-max"><i class="fa-solid fa-person-walking-arrow-right text-slate-400"></i> Pindah</span>`;
                     } else if (statusStr.includes('Meninggal')) {
-                        statusBadge = `<span class="px-2.5 py-1 rounded-full bg-rose-950/70 text-rose-300 border border-rose-800 text-[11px] font-bold flex items-center gap-1 w-max"><i class="fa-solid fa-dove text-rose-400"></i> Meninggal</span>`;
+                        statusBadge = `<span class="px-2 py-0.5 rounded-full bg-rose-950/70 text-rose-300 border border-rose-800 text-[10px] font-bold flex items-center gap-1 w-max"><i class="fa-solid fa-dove text-rose-400"></i> Wafat</span>`;
                     }
 
                     const platMobilArr = String(warga.platMobil || '').split(',').map(p => p.trim()).filter(p => p);
@@ -1065,47 +1005,47 @@
                             const platList = [...platMobilArr, ...platMotorArr].join(', ');
                             vehicleHTML.push(`
                                 <div class="text-xs">
-                                    <div class="line-through text-slate-500 font-plat text-[11px]">${platList}</div>
-                                    <span class="inline-flex items-center gap-1 mt-1 px-2 py-0.5 rounded bg-rose-950/80 border border-rose-800 text-rose-400 text-[10px] font-bold">
-                                        <i class="fa-solid fa-ban"></i> Akses Gerbang Dicabut
+                                    <div class="line-through text-slate-500 font-plat text-[10px]">${platList}</div>
+                                    <span class="inline-flex items-center gap-1 mt-0.5 px-1.5 py-0.2 rounded bg-rose-950/80 border border-rose-800 text-rose-400 text-[9px] font-bold">
+                                        <i class="fa-solid fa-ban"></i> Akses Dicabut
                                     </span>
                                 </div>
                             `);
                         }
                     } else {
                         if (jmlMobil > 0) {
-                            const platBadges = platMobilArr.map(p => `<span class="bg-[#030712] text-white border border-slate-700 font-plat font-bold px-2 py-0.5 rounded text-[10px] tracking-wider shadow-sm whitespace-nowrap inline-flex items-center gap-1.5"><i class="fa-solid fa-car text-[9px] text-sky-400"></i>${p}</span>`).join('');
+                            const platBadges = platMobilArr.map(p => `<span class="bg-[#030712] text-white border border-slate-700 font-plat font-bold px-1.5 py-0.5 rounded text-[10px] tracking-wider whitespace-nowrap inline-flex items-center gap-1"><i class="fa-solid fa-car text-[8px] text-sky-400"></i>${p}</span>`).join('');
                             vehicleHTML.push(`
-                                <div class="flex items-start gap-2">
-                                    <span class="text-xs font-bold text-sky-400 shrink-0 mt-0.5 w-10"><i class="fa-solid fa-car"></i> ${jmlMobil}x</span>
-                                    <div class="flex flex-wrap gap-1.5 items-center flex-1">${platBadges}</div>
+                                <div class="flex items-start gap-1.5">
+                                    <span class="text-[11px] font-bold text-sky-400 shrink-0 mt-0.5 w-8"><i class="fa-solid fa-car"></i> ${jmlMobil}x</span>
+                                    <div class="flex flex-wrap gap-1 items-center flex-1">${platBadges}</div>
                                 </div>
                             `);
                         }
 
                         if (jmlMotor > 0) {
-                            const platBadges = platMotorArr.map(p => `<span class="bg-[#030712] text-amber-300 border border-slate-700 font-plat font-bold px-2 py-0.5 rounded text-[10px] tracking-wider shadow-sm whitespace-nowrap inline-flex items-center gap-1.5"><i class="fa-solid fa-motorcycle text-[9px] text-amber-400"></i>${p}</span>`).join('');
+                            const platBadges = platMotorArr.map(p => `<span class="bg-[#030712] text-amber-300 border border-slate-700 font-plat font-bold px-1.5 py-0.5 rounded text-[10px] tracking-wider whitespace-nowrap inline-flex items-center gap-1"><i class="fa-solid fa-motorcycle text-[8px] text-amber-400"></i>${p}</span>`).join('');
                             vehicleHTML.push(`
-                                <div class="flex items-start gap-2">
-                                    <span class="text-xs font-bold text-amber-400 shrink-0 mt-0.5 w-10"><i class="fa-solid fa-motorcycle"></i> ${jmlMotor}x</span>
-                                    <div class="flex flex-wrap gap-1.5 items-center flex-1">${platBadges}</div>
+                                <div class="flex items-start gap-1.5">
+                                    <span class="text-[11px] font-bold text-amber-400 shrink-0 mt-0.5 w-8"><i class="fa-solid fa-motorcycle"></i> ${jmlMotor}x</span>
+                                    <div class="flex flex-wrap gap-1 items-center flex-1">${platBadges}</div>
                                 </div>
                             `);
                         }
                     }
 
-                    const garasiContent = vehicleHTML.length > 0 ? `<div class="space-y-2 py-1">${vehicleHTML.join('')}</div>` : `<span class="text-slate-500 text-xs italic">Tanpa kendaraan</span>`;
+                    const garasiContent = vehicleHTML.length > 0 ? `<div class="space-y-1.5 py-1">${vehicleHTML.join('')}</div>` : `<span class="text-slate-500 text-xs italic">-</span>`;
                     const rowClass = isInactive ? "opacity-60 hover:opacity-100 bg-slate-950/40" : "hover:bg-emerald-950/20";
                     const cleanPhone = formatWhatsAppNumber(warga.kontak);
                     const safeName = nama.replace(/'/g, "\\'");
                     
                     const waLinkHTML = cleanPhone ? `
-                        <div class="inline-flex items-center gap-1.5">
-                            <button onclick="openWhatsAppDirect('${warga.kontak}', '${safeName}')" class="text-brand-300 hover:text-brand-200 font-semibold inline-flex items-center gap-1.5 bg-brand-950/60 hover:bg-brand-900/80 border border-brand-500/30 hover:border-brand-500 px-2.5 py-1 rounded-xl transition text-xs shadow-xs" title="Chat via WhatsApp">
-                                <i class="fa-brands fa-whatsapp text-emerald-400 text-sm"></i>
+                        <div class="inline-flex items-center gap-1">
+                            <button onclick="openWhatsAppDirect('${warga.kontak}', '${safeName}')" class="text-brand-300 hover:text-brand-200 font-semibold inline-flex items-center gap-1 bg-brand-950/60 hover:bg-brand-900/80 border border-brand-500/30 hover:border-brand-500 px-2 py-0.5 rounded-lg transition text-xs" title="Chat via WhatsApp">
+                                <i class="fa-brands fa-whatsapp text-emerald-400 text-xs"></i>
                                 <span>${warga.kontak}</span>
                             </button>
-                            <button onclick="copyPhoneNumber('${warga.kontak}', event)" class="p-1.5 text-slate-400 hover:text-slate-200 hover:bg-slate-800 rounded-lg transition" title="Salin Nomor HP">
+                            <button onclick="copyPhoneNumber('${warga.kontak}', event)" class="p-1 text-slate-400 hover:text-slate-200 rounded transition" title="Salin Nomor HP">
                                 <i class="fa-regular fa-copy text-xs"></i>
                             </button>
                         </div>
@@ -1113,52 +1053,52 @@
 
                     const row = `
                         <tr class="${rowClass} transition border-b border-slate-800/80">
-                            <td class="px-4 py-3.5 text-center text-xs text-slate-500 font-mono">${index + 1}</td>
+                            <td class="px-3 py-3 text-center text-xs text-slate-500 font-mono">${index + 1}</td>
                             
-                            <td class="px-5 py-3.5">
-                                <div class="flex items-center gap-3">
-                                    <div class="w-8 h-8 rounded-full ${warga.gender === 'L' ? 'bg-cyan-950/80 text-cyan-300 border border-cyan-800' : 'bg-rose-950/80 text-rose-300 border border-rose-800'} font-bold flex items-center justify-center text-xs shadow-inner shrink-0">${initials}</div>
+                            <td class="px-4 py-3">
+                                <div class="flex items-center gap-2.5">
+                                    <div class="w-7 h-7 rounded-full ${warga.gender === 'L' ? 'bg-cyan-950/80 text-cyan-300 border border-cyan-800' : 'bg-rose-950/80 text-rose-300 border border-rose-800'} font-bold flex items-center justify-center text-[10px] shrink-0">${initials}</div>
                                     <div>
-                                        <div class="font-bold text-white flex items-center gap-1.5">
+                                        <div class="font-bold text-white text-xs sm:text-sm flex items-center gap-1">
                                             <span>${warga.nama}</span>
-                                            ${isInactive ? `<span class="text-[10px] px-1.5 py-0.2 bg-slate-800 text-slate-400 rounded font-normal">Nonaktif</span>` : ''}
+                                            ${isInactive ? `<span class="text-[9px] px-1 py-0.2 bg-slate-800 text-slate-400 rounded font-normal">Nonaktif</span>` : ''}
                                         </div>
-                                        <div class="text-[11px] text-slate-400 font-mono">${warga.nik}</div>
+                                        <div class="text-[10px] text-slate-400 font-mono">${warga.nik}</div>
                                     </div>
                                 </div>
                             </td>
 
-                            <td class="px-4 py-3.5">
-                                <div class="text-xs font-semibold text-slate-200 flex items-center gap-1.5">
-                                    <i class="fa-solid fa-road text-[11px] text-brand-400 shrink-0"></i>
+                            <td class="px-4 py-3">
+                                <div class="text-xs font-semibold text-slate-200 flex items-center gap-1">
+                                    <i class="fa-solid fa-road text-[10px] text-brand-400 shrink-0"></i>
                                     <span>${warga.jalan || '-'}</span>
                                 </div>
                             </td>
 
-                            <td class="px-4 py-3.5">
-                                <span class="px-2.5 py-1 rounded-lg bg-slate-900 border border-emerald-900/60 font-bold text-white text-xs inline-block">
+                            <td class="px-3 py-3">
+                                <span class="px-2 py-0.5 rounded bg-slate-900 border border-emerald-900/60 font-bold text-white text-xs inline-block">
                                     ${warga.blok}
                                 </span>
                             </td>
 
-                            <td class="px-3 py-3.5 text-center"><span class="px-2 py-0.5 rounded-full text-xs font-bold ${warga.gender === 'L' ? 'bg-cyan-950/60 text-cyan-400 border border-cyan-800' : 'bg-rose-950/60 text-rose-400 border border-rose-800'}">${warga.gender}</span></td>
-                            <td class="px-4 py-3.5"><span class="text-xs font-semibold px-2 py-1 rounded-lg bg-slate-800/80 text-slate-300 border border-slate-700/60">${warga.hubungan}</span></td>
-                            <td class="px-4 py-3.5">${statusBadge}</td>
+                            <td class="px-2 py-3 text-center"><span class="px-1.5 py-0.5 rounded-full text-[10px] font-bold ${warga.gender === 'L' ? 'bg-cyan-950/60 text-cyan-400 border border-cyan-800' : 'bg-rose-950/60 text-rose-400 border border-rose-800'}">${warga.gender}</span></td>
+                            <td class="px-3 py-3"><span class="text-xs font-semibold px-2 py-0.5 rounded bg-slate-800/80 text-slate-300 border border-slate-700/60">${warga.hubungan}</span></td>
+                            <td class="px-3 py-3">${statusBadge}</td>
                             
-                            <td class="px-5 py-3.5 max-w-[330px]">${garasiContent}</td>
-                            <td class="px-4 py-3.5 text-xs">${waLinkHTML}</td>
+                            <td class="px-4 py-3 max-w-[300px]">${garasiContent}</td>
+                            <td class="px-3 py-3 text-xs">${waLinkHTML}</td>
                             
-                            <td class="px-4 py-3.5 text-center sticky right-0 bg-[#07131e] z-10 border-l border-slate-800 shadow-[-10px_0_15px_rgba(0,0,0,0.5)]">
+                            <td class="px-3 py-3 text-center sticky right-0 bg-[#07131e] z-10 border-l border-slate-800 shadow-[-8px_0_12px_rgba(0,0,0,0.5)]">
                                 ${isSuper ? `
-                                    <div class="flex items-center justify-center gap-2">
-                                        <button onclick="openEditModal('${warga.id}')" class="p-1.5 text-slate-400 hover:text-brand-400 hover:bg-slate-800/90 rounded-lg transition" title="Edit Data">
-                                            <i class="fa-solid fa-pen-to-square text-sm"></i>
+                                    <div class="flex items-center justify-center gap-1.5">
+                                        <button onclick="openEditModal('${warga.id}')" class="p-1 text-slate-400 hover:text-brand-400 hover:bg-slate-800/90 rounded transition" title="Edit Data">
+                                            <i class="fa-solid fa-pen-to-square text-xs"></i>
                                         </button>
-                                        <button onclick="deleteResident('${warga.id}')" class="p-1.5 text-slate-400 hover:text-rose-400 hover:bg-slate-800/90 rounded-lg transition" title="Hapus Data">
-                                            <i class="fa-regular fa-trash-can text-sm"></i>
+                                        <button onclick="deleteResident('${warga.id}')" class="p-1 text-slate-400 hover:text-rose-400 hover:bg-slate-800/90 rounded transition" title="Hapus Data">
+                                            <i class="fa-regular fa-trash-can text-xs"></i>
                                         </button>
                                     </div>
-                                ` : `<span class="text-slate-600 text-xs"><i class="fa-solid fa-lock text-[10px]"></i></span>`}
+                                ` : `<span class="text-slate-600 text-xs"><i class="fa-solid fa-lock text-[9px]"></i></span>`}
                             </td>
                         </tr>
                     `;
@@ -1236,7 +1176,7 @@
             totalEl.innerText = securities.length;
 
             if (securities.length === 0) {
-                container.innerHTML = `<div class="text-center py-6 text-slate-500 text-xs italic">Belum ada personil security yang terdaftar di cloud.</div>`;
+                container.innerHTML = `<div class="text-center py-6 text-slate-500 text-xs italic">Belum ada personil security di database cloud.</div>`;
                 return;
             }
 
@@ -1246,27 +1186,27 @@
                 const isPagi = String(sec.shift || '').toLowerCase().includes('pagi');
 
                 const card = `
-                    <div class="p-3.5 rounded-2xl bg-slate-950/70 border border-slate-800 flex items-center justify-between gap-3 hover:border-teal-500/30 transition">
-                        <div class="flex items-center gap-3">
-                            <div class="w-9 h-9 rounded-xl ${isPagi ? 'bg-amber-950/60 text-amber-400 border border-amber-800/80' : 'bg-indigo-950/60 text-indigo-400 border border-indigo-800/80'} flex items-center justify-center text-sm shadow-inner shrink-0">
+                    <div class="p-3 rounded-2xl bg-slate-950/70 border border-slate-800 flex items-center justify-between gap-2 hover:border-teal-500/30 transition">
+                        <div class="flex items-center gap-2.5">
+                            <div class="w-8 h-8 rounded-xl ${isPagi ? 'bg-amber-950/60 text-amber-400 border border-amber-800/80' : 'bg-indigo-950/60 text-indigo-400 border border-indigo-800/80'} flex items-center justify-center text-xs shrink-0">
                                 <i class="fa-solid ${isPagi ? 'fa-sun' : 'fa-moon'}"></i>
                             </div>
                             <div>
-                                <div class="font-bold text-white text-xs flex items-center gap-1.5">
+                                <div class="font-bold text-white text-xs flex items-center gap-1.5 flex-wrap">
                                     <span>${sec.nama}</span>
-                                    <span class="text-[10px] px-2 py-0.2 rounded-full font-semibold ${isPagi ? 'bg-amber-950/70 text-amber-300 border border-amber-800/60' : 'bg-indigo-950/70 text-indigo-300 border border-indigo-800/60'}">${sec.shift}</span>
+                                    <span class="text-[9px] px-1.5 py-0.2 rounded-full font-semibold ${isPagi ? 'bg-amber-950/70 text-amber-300 border border-amber-800/60' : 'bg-indigo-950/70 text-indigo-300 border border-indigo-800/60'}">${sec.shift}</span>
                                 </div>
-                                <div class="text-[11px] text-teal-400 font-medium mt-0.5">${sec.peran}</div>
+                                <div class="text-[10px] text-teal-400 font-medium">${sec.peran}</div>
                             </div>
                         </div>
 
-                        <div class="flex items-center gap-2">
-                            <button onclick="openWhatsAppDirect('${sec.kontak}', '${sec.nama}')" class="px-2.5 py-1 bg-emerald-950/60 hover:bg-emerald-900/80 border border-emerald-700/60 text-emerald-300 text-xs font-semibold rounded-xl flex items-center gap-1.5 transition" title="Hubungi WhatsApp">
+                        <div class="flex items-center gap-1.5">
+                            <button onclick="openWhatsAppDirect('${sec.kontak}', '${sec.nama}')" class="px-2 py-1 bg-emerald-950/60 hover:bg-emerald-900/80 border border-emerald-700/60 text-emerald-300 text-[11px] font-semibold rounded-lg flex items-center gap-1 transition" title="Hubungi WhatsApp">
                                 <i class="fa-brands fa-whatsapp text-emerald-400"></i>
                                 <span>${sec.kontak}</span>
                             </button>
                             ${isSuper ? `
-                                <button onclick="deleteSecurity('${sec.id}')" class="p-1.5 text-slate-500 hover:text-rose-400 hover:bg-slate-800 rounded-lg transition" title="Hapus Personil">
+                                <button onclick="deleteSecurity('${sec.id}')" class="p-1 text-slate-500 hover:text-rose-400 rounded transition" title="Hapus Personil">
                                     <i class="fa-regular fa-trash-can text-xs"></i>
                                 </button>
                             ` : ''}
@@ -1293,14 +1233,14 @@
             db.collection("securities").doc(newId).set(newSec)
                 .then(() => {
                     document.getElementById('secForm').reset();
-                    showToast("Personil security berhasil disimpan ke Cloud!");
+                    showToast("Personil security berhasil disimpan!");
                 })
                 .catch(err => showToast("Gagal menyimpan: " + err.message, false));
         }
 
         function deleteSecurity(id) {
             if (currentRole !== 'superuser') return;
-            if (confirm("Apakah Anda yakin ingin menghapus data personil security ini?")) {
+            if (confirm("Apakah Anda yakin ingin menghapus data security ini?")) {
                 db.collection("securities").doc(String(id)).delete()
                     .then(() => showToast("Personil security berhasil dihapus."))
                     .catch(err => showToast("Gagal menghapus: " + err.message, false));
@@ -1316,7 +1256,7 @@
             document.getElementById('jmlMobil').value = "0";
             document.getElementById('jmlMotor').value = "0";
             document.getElementById('modalTitle').innerText = "Registrasi Warga & Kendaraan";
-            document.getElementById('modalIcon').className = "fa-solid fa-user-plus text-base";
+            document.getElementById('modalIcon').className = "fa-solid fa-user-plus text-sm";
             document.getElementById('modalSubmitBtn').innerText = "Simpan ke Cloud";
             document.getElementById('residentModal').classList.remove('hidden');
         }
@@ -1343,7 +1283,7 @@
             syncVehicleCount('motor');
 
             document.getElementById('modalTitle').innerText = "Edit Data Warga & Status";
-            document.getElementById('modalIcon').className = "fa-solid fa-pen-to-square text-base";
+            document.getElementById('modalIcon').className = "fa-solid fa-pen-to-square text-sm";
             document.getElementById('modalSubmitBtn').innerText = "Update ke Cloud";
             document.getElementById('residentModal').classList.remove('hidden');
         }
@@ -1386,10 +1326,10 @@
                     .then(() => showToast("Perubahan data warga berhasil disinkronkan ke Cloud!"))
                     .catch(err => showToast("Gagal update data: " + err.message, false));
             } else {
-                // Tambah data baru ke Firebase
+                // Tambah baru ke Firebase
                 const newId = String(Date.now());
                 db.collection("residents").doc(newId).set({ id: newId, ...residentData })
-                    .then(() => showToast("Warga baru berhasil ditambahkan ke Cloud!"))
+                    .then(() => showToast("Warga baru berhasil disimpan ke Cloud!"))
                     .catch(err => showToast("Gagal menyimpan: " + err.message, false));
             }
 
@@ -1398,14 +1338,14 @@
 
         function deleteResident(id) {
             if (currentRole !== 'superuser') return;
-            if (confirm("Apakah Anda yakin ingin menghapus data warga ini dari Cloud?")) {
+            if (confirm("Apakah Anda yakin ingin menghapus data warga ini?")) {
                 db.collection("residents").doc(String(id)).delete()
                     .then(() => showToast("Data warga berhasil dihapus dari Cloud."))
                     .catch(err => showToast("Gagal menghapus: " + err.message, false));
             }
         }
 
-        // ================= FITUR EXCEL DENGAN CLOUD SYNC =================
+        // ================= FITUR EXCEL =================
         function triggerExcelImport() {
             if (currentRole !== 'superuser') {
                 showToast("Akses ditolak: Hanya Superuser yang dapat mengunggah Excel!", false);
@@ -1496,7 +1436,7 @@
 
                     if (addedCount > 0) {
                         batch.commit().then(() => {
-                            showToast(`Berhasil upload ${addedCount} data warga langsung ke Cloud!`);
+                            showToast(`Berhasil mengunggah ${addedCount} data warga!`);
                         }).catch(err => {
                             showToast("Gagal menyimpan ke Cloud: " + err.message, false);
                         });
