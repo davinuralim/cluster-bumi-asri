@@ -2,8 +2,8 @@
 <html lang="id">
 <head>
     <meta charset="UTF-8">
-    <!-- Viewport Responsif Otomatis Sesuai Layar HP / Desktop -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="color-scheme" content="dark">
     <title>Portal Kependudukan & Kendaraan - Cluster Bumi Asri</title>
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -34,25 +34,58 @@
     <!-- Google Font -->
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
     <style>
+        :root {
+            color-scheme: dark;
+        }
         body { 
             font-family: 'Plus Jakarta Sans', sans-serif; 
-            background: radial-gradient(circle at 50% -20%, #0d2b27 0%, #081622 45%, #050b14 100%);
+            background: #060e17;
+            background-image: radial-gradient(circle at 50% -20%, #0d2b27 0%, #081622 45%, #050b14 100%);
             background-attachment: fixed;
+            background-color: #060e17;
         }
         .font-plat { font-family: 'JetBrains Mono', monospace; }
         
-        /* Modern Asri Glassmorphism */
+        /* Glassmorphism Solid Gelap Aman untuk Safari iOS */
         .dark-glass {
-            background: rgba(8, 20, 30, 0.88);
-            backdrop-filter: blur(22px);
-            -webkit-backdrop-filter: blur(22px);
-            border: 1px solid rgba(52, 211, 153, 0.15);
+            background-color: #08141e;
+            background: rgba(8, 20, 30, 0.94);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(52, 211, 153, 0.18);
         }
         .dark-glass-card {
-            background: rgba(11, 23, 36, 0.8);
-            backdrop-filter: blur(18px);
-            -webkit-backdrop-filter: blur(18px);
+            background-color: #0b1724;
+            background: rgba(11, 23, 36, 0.92);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
             border: 1px solid rgba(52, 211, 153, 0.14);
+        }
+
+        /* Kartu Bento Gelap Pekat (Anti-Putih di Safari iPhone) */
+        .card-stat-default {
+            background: #0b1724 !important;
+            border: 1px solid rgba(52, 211, 153, 0.2) !important;
+        }
+        .card-stat-hunian {
+            background: #0c1829 !important;
+            border: 1px solid rgba(99, 102, 241, 0.25) !important;
+        }
+        .card-stat-nonaktif {
+            background: #1b1219 !important;
+            border: 1px solid rgba(244, 63, 94, 0.25) !important;
+        }
+        .card-stat-security {
+            background: #081c22 !important;
+            border: 1px solid rgba(20, 184, 166, 0.3) !important;
+        }
+        .card-stat-mobil {
+            background: #091a2a !important;
+            border: 1px solid rgba(14, 165, 233, 0.25) !important;
+        }
+        .card-stat-motor {
+            background: #1c1810 !important;
+            border: 1px solid rgba(245, 158, 11, 0.25) !important;
         }
 
         /* Custom Scrollbar */
@@ -73,7 +106,7 @@
         }
     </style>
 </head>
-<body class="text-slate-200 min-h-screen flex flex-col justify-between selection:bg-brand-500 selection:text-white relative overflow-x-hidden">
+<body class="text-slate-200 min-h-screen flex flex-col justify-between selection:bg-brand-500 selection:text-white relative overflow-x-hidden bg-[#060e17]">
 
     <!-- Ambient Glowing Lights Nuansa Asri & Elegan -->
     <div class="fixed top-[-80px] left-1/4 w-[350px] md:w-[750px] h-[350px] md:h-[450px] bg-emerald-500/15 rounded-full blur-[120px] md:blur-[160px] pointer-events-none -z-10"></div>
@@ -148,7 +181,6 @@
                 <div class="space-y-2 pt-2 border-t border-slate-800/80">
                     <p class="text-[11px] font-bold uppercase tracking-wider text-slate-400 text-center">Pilihan Akses Masuk:</p>
                     <div class="grid grid-cols-2 gap-2 text-xs">
-                        <!-- Superuser Dikunci / Manual -->
                         <div class="p-2.5 rounded-2xl border border-amber-900/40 bg-amber-950/20 text-amber-300/60 flex flex-col justify-between cursor-not-allowed select-none opacity-80" title="Akses Superuser wajib diketik manual">
                             <div class="flex items-center justify-between">
                                 <span class="flex items-center gap-1 text-[11px] text-amber-400/90 font-bold">
@@ -161,7 +193,6 @@
                             <span class="text-[10px] text-slate-400 mt-1">Akses Penuh (Ketik Manual)</span>
                         </div>
 
-                        <!-- User Warga Tetap Bisa Akses Cepat -->
                         <button type="button" onclick="setQuickLogin('warga', 'warga123')" class="p-2.5 rounded-2xl border border-blue-900/60 bg-blue-950/30 hover:bg-blue-950/50 text-blue-300 font-semibold transition text-left flex flex-col justify-between group">
                             <div class="flex items-center justify-between">
                                 <span class="flex items-center gap-1 text-[11px] text-blue-400 font-bold group-hover:text-blue-300">
@@ -189,7 +220,7 @@
     <!-- ================= VIEW 2: DASHBOARD ================= -->
     <div id="dashboardView" class="hidden w-full flex-col min-h-screen">
         
-        <!-- Header Navbar Responsif (Tampil Lisensi di HP & Desktop) -->
+        <!-- Header Navbar Responsif -->
         <header class="dark-glass border-b border-emerald-500/20 sticky top-0 z-30 shadow-xl shadow-black/40">
             <div class="max-w-7xl mx-auto px-3.5 sm:px-6 py-2.5 sm:py-3.5 flex flex-wrap justify-between items-center gap-2 sm:gap-4">
                 
@@ -209,7 +240,7 @@
                     </div>
                 </div>
 
-                <!-- Bagian Tengah / Tampilan di Desktop & Tablet -->
+                <!-- Bagian Tengah: Tampilan Desktop & Tablet -->
                 <div class="hidden md:flex items-center justify-center flex-1 px-2">
                     <div class="inline-flex items-center gap-2 px-3.5 py-1.5 bg-gradient-to-r from-emerald-950/70 via-slate-900/90 to-teal-950/70 border border-emerald-500/40 rounded-xl shadow-md">
                         <div class="w-6 h-6 rounded-lg bg-gradient-to-br from-brand-500 to-teal-600 flex items-center justify-center text-white text-[10px] shadow-sm">
@@ -231,9 +262,9 @@
                     </button>
                 </div>
 
-                <!-- KHUSUS TAMPILAN HP: Badge Lisensi Davi Nur Alim di Atas (Rapi & Menawan) -->
+                <!-- KHUSUS HP: Badge Lisensi Davi Nur Alim di Atas (Rapi & Menawan) -->
                 <div class="flex md:hidden w-full pt-1">
-                    <div class="w-full flex items-center justify-between px-2.5 py-1.5 bg-gradient-to-r from-emerald-950/60 via-slate-900/90 to-teal-950/60 border border-emerald-500/30 rounded-xl shadow-inner text-[10px]">
+                    <div class="w-full flex items-center justify-between px-2.5 py-1.5 bg-gradient-to-r from-emerald-950/80 via-slate-900/95 to-teal-950/80 border border-emerald-500/30 rounded-xl shadow-inner text-[10px]">
                         <span class="text-slate-300 flex items-center gap-1 font-medium">
                             <i class="fa-solid fa-shield-halved text-brand-400 text-[10px]"></i> Dilisensikan resmi oleh:
                         </span>
@@ -260,14 +291,14 @@
                 </div>
             </div>
 
-            <!-- Bento-Grid Responsif -->
+            <!-- Bento-Grid Dark Analytics (Anti-Putih di Safari iPhone) -->
             <section class="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-6 gap-2 sm:gap-3">
                 
                 <!-- 1. Warga Aktif Card -->
-                <div class="dark-glass-card p-3 sm:p-4 rounded-2xl sm:rounded-3xl hover:border-brand-500/40 transition">
+                <div class="card-stat-default p-3 sm:p-4 rounded-2xl sm:rounded-3xl hover:border-brand-500/40 transition">
                     <div class="flex items-center justify-between">
                         <span class="text-[10px] sm:text-[11px] font-bold uppercase tracking-wider text-slate-300">Warga Aktif</span>
-                        <div class="w-7 h-7 sm:w-8 sm:h-8 rounded-xl bg-brand-950/70 border border-brand-500/30 text-brand-400 flex items-center justify-center text-xs">
+                        <div class="w-7 h-7 sm:w-8 sm:h-8 rounded-xl bg-brand-950/90 border border-brand-500/40 text-brand-400 flex items-center justify-center text-xs">
                             <i class="fa-solid fa-users"></i>
                         </div>
                     </div>
@@ -281,11 +312,11 @@
                     </div>
                 </div>
 
-                <!-- 2. Status Rumah / KK -->
-                <div class="dark-glass-card p-3 sm:p-4 rounded-2xl sm:rounded-3xl hover:border-indigo-500/40 transition bg-indigo-950/15">
+                <!-- 2. Status Rumah / KK (Dark Indigo Pekat) -->
+                <div class="card-stat-hunian p-3 sm:p-4 rounded-2xl sm:rounded-3xl hover:border-indigo-500/50 transition">
                     <div class="flex items-center justify-between">
                         <span class="text-[10px] sm:text-[11px] font-bold uppercase tracking-wider text-indigo-300">Hunian (KK)</span>
-                        <div class="w-7 h-7 sm:w-8 sm:h-8 rounded-xl bg-indigo-950/80 border border-indigo-500/30 text-indigo-400 flex items-center justify-center text-xs">
+                        <div class="w-7 h-7 sm:w-8 sm:h-8 rounded-xl bg-indigo-950/90 border border-indigo-500/40 text-indigo-400 flex items-center justify-center text-xs">
                             <i class="fa-solid fa-people-roof"></i>
                         </div>
                     </div>
@@ -305,11 +336,11 @@
                     </div>
                 </div>
 
-                <!-- 3. Warga Tidak Aktif Card -->
-                <div class="dark-glass-card p-3 sm:p-4 rounded-2xl sm:rounded-3xl hover:border-rose-500/40 transition bg-rose-950/15">
+                <!-- 3. Warga Tidak Aktif Card (Dark Wine / Maroon Pekat) -->
+                <div class="card-stat-nonaktif p-3 sm:p-4 rounded-2xl sm:rounded-3xl hover:border-rose-500/50 transition">
                     <div class="flex items-center justify-between">
                         <span class="text-[10px] sm:text-[11px] font-bold uppercase tracking-wider text-rose-300">Nonaktif</span>
-                        <div class="w-7 h-7 sm:w-8 sm:h-8 rounded-xl bg-rose-950/80 border border-rose-500/30 text-rose-400 flex items-center justify-center text-xs">
+                        <div class="w-7 h-7 sm:w-8 sm:h-8 rounded-xl bg-rose-950/90 border border-rose-500/40 text-rose-400 flex items-center justify-center text-xs">
                             <i class="fa-solid fa-user-xmark"></i>
                         </div>
                     </div>
@@ -323,13 +354,13 @@
                     </div>
                 </div>
 
-                <!-- 4. Petugas Keamanan / Security Card -->
-                <div class="dark-glass-card p-3 sm:p-4 rounded-2xl sm:rounded-3xl hover:border-teal-400/50 transition bg-teal-950/20 cursor-pointer group" onclick="openSecurityModal()" title="Lihat jadwal personil security">
+                <!-- 4. Petugas Keamanan Card (Dark Teal Pekat) -->
+                <div class="card-stat-security p-3 sm:p-4 rounded-2xl sm:rounded-3xl hover:border-teal-400/50 transition cursor-pointer group" onclick="openSecurityModal()" title="Lihat jadwal personil security">
                     <div class="flex items-center justify-between">
                         <span class="text-[10px] sm:text-[11px] font-bold uppercase tracking-wider text-teal-300 flex items-center gap-1">
                             Security <i class="fa-solid fa-arrow-up-right-from-square text-[8px] opacity-70"></i>
                         </span>
-                        <div class="w-7 h-7 sm:w-8 sm:h-8 rounded-xl bg-teal-950/90 border border-teal-500/40 text-teal-300 flex items-center justify-center text-xs group-hover:scale-105 transition">
+                        <div class="w-7 h-7 sm:w-8 sm:h-8 rounded-xl bg-teal-950/90 border border-teal-500/50 text-teal-300 flex items-center justify-center text-xs group-hover:scale-105 transition">
                             <i class="fa-solid fa-shield-halved"></i>
                         </div>
                     </div>
@@ -343,11 +374,11 @@
                     </div>
                 </div>
 
-                <!-- 5. Mobil Card -->
-                <div class="dark-glass-card p-3 sm:p-4 rounded-2xl sm:rounded-3xl hover:border-sky-500/40 transition">
+                <!-- 5. Mobil Card (Dark Blue Pekat) -->
+                <div class="card-stat-mobil p-3 sm:p-4 rounded-2xl sm:rounded-3xl hover:border-sky-500/50 transition">
                     <div class="flex items-center justify-between">
                         <span class="text-[10px] sm:text-[11px] font-bold uppercase tracking-wider text-sky-400">Mobil</span>
-                        <div class="w-7 h-7 sm:w-8 sm:h-8 rounded-xl bg-sky-950/60 border border-sky-500/20 text-sky-400 flex items-center justify-center text-xs">
+                        <div class="w-7 h-7 sm:w-8 sm:h-8 rounded-xl bg-sky-950/90 border border-sky-500/40 text-sky-400 flex items-center justify-center text-xs">
                             <i class="fa-solid fa-car-side"></i>
                         </div>
                     </div>
@@ -360,11 +391,11 @@
                     </div>
                 </div>
 
-                <!-- 6. Motor Card -->
-                <div class="dark-glass-card p-3 sm:p-4 rounded-2xl sm:rounded-3xl hover:border-amber-500/40 transition">
+                <!-- 6. Motor Card (Dark Amber Pekat) -->
+                <div class="card-stat-motor p-3 sm:p-4 rounded-2xl sm:rounded-3xl hover:border-amber-500/50 transition">
                     <div class="flex items-center justify-between">
                         <span class="text-[10px] sm:text-[11px] font-bold uppercase tracking-wider text-amber-400">Motor</span>
-                        <div class="w-7 h-7 sm:w-8 sm:h-8 rounded-xl bg-amber-950/60 border border-amber-500/20 text-amber-400 flex items-center justify-center text-xs">
+                        <div class="w-7 h-7 sm:w-8 sm:h-8 rounded-xl bg-amber-950/90 border border-amber-500/40 text-amber-400 flex items-center justify-center text-xs">
                             <i class="fa-solid fa-motorcycle"></i>
                         </div>
                     </div>
@@ -461,7 +492,7 @@
 
             </div>
 
-            <!-- TABEL DATA WARGA (HORIZONTAL SCROLL RAPI DI HP) -->
+            <!-- TABEL DATA WARGA -->
             <div class="dark-glass-card rounded-3xl overflow-hidden shadow-2xl border border-emerald-500/20">
                 <div class="overflow-x-auto w-full">
                     <table class="w-full text-left text-sm text-slate-300 min-w-[1000px]">
@@ -686,14 +717,11 @@
 
     <!-- ================= JAVASCRIPT ================= -->
     <script>
-        // Akun Login Pengurus & Warga
-        // Superuser: rt10 / rt10 (wajib diketik manual)
         const ACCOUNTS = {
             'rt10': { pass: 'rt10', role: 'superuser', label: 'Superuser (RT 10)' },
             'warga': { pass: 'warga123', role: 'user', label: 'User Biasa' }
         };
 
-        // Data Awal Cadangan (Jika Database Cloud Masih Kosong)
         const initialResidents = [
             { id: "1", nik: "3201011508890001", nama: "Hartono Kusuma", jalan: "Jl. Asri Raya Utama", blok: "Blok A1 No. 05", gender: "L", hubungan: "Kepala Keluarga", status: "Tetap (Pemilik)", kontak: "081234567890", jmlMobil: 1, platMobil: "B 1425 BMA", jmlMotor: 2, platMotor: "B 6543 BMA, B 3321 XYZ" },
             { id: "2", nik: "3201015609920002", nama: "Siti Rahmawati", jalan: "Jl. Asri Raya Utama", blok: "Blok A1 No. 05", gender: "P", hubungan: "Istri", status: "Tetap (Pemilik)", kontak: "081234567891", jmlMobil: 0, platMobil: "", jmlMotor: 0, platMotor: "" },
@@ -709,7 +737,7 @@
             { id: "4", nama: "Pak Agus Pratama", peran: "Anggota (Pos Gerbang Belakang)", shift: "Shift Malam (19.00 - 07.00)", kontak: "081299112236" }
         ];
 
-        // ================= KONEKSI FIREBASE CLOUD REALTIME =================
+        // Inisialisasi Firebase
         const firebaseConfig = {
             apiKey: "AIzaSyDq5e7y-i8RfRmE1xVW8366DFU_3HavUrE",
             authDomain: "cluster-bumi-asri.firebaseapp.com",
@@ -719,7 +747,6 @@
             appId: "1:683657017337:web:8ff49c3ee4218f1c3eaf28"
         };
 
-        // Inisialisasi Firebase & Firestore
         firebase.initializeApp(firebaseConfig);
         const db = firebase.firestore();
 
@@ -727,7 +754,6 @@
         let securities = [];
         let currentRole = sessionStorage.getItem('currentRole') || null;
 
-        // Toggle Lihat / Sembunyikan Password
         function togglePasswordVisibility() {
             const passInput = document.getElementById('passwordInput');
             const eyeIcon = document.getElementById('eyeIcon');
@@ -742,14 +768,12 @@
             }
         }
 
-        // Bantuan Lupa Sandi Langsung ke WhatsApp 08979557890
         function contactWhatsAppForgot() {
             const pesan = encodeURIComponent("Halo Pengurus RT Cluster Bumi Asri, saya butuh bantuan terkait username dan password akun portal.");
             const waUrl = `https://wa.me/628979557890?text=${pesan}`;
             window.open(waUrl, '_blank');
         }
 
-        // ================= LISTENER DATABASE REALTIME =================
         db.collection("residents").onSnapshot((snapshot) => {
             if (snapshot.empty) {
                 initialResidents.forEach(res => {
@@ -1168,7 +1192,7 @@
             document.getElementById('statMotor').innerText = totalMotor;
         }
 
-        // ================= KELOLA SECURITY =================
+        // Kelola Security
         function openSecurityModal() {
             const isSuper = (currentRole === 'superuser');
             const formContainer = document.getElementById('secAddFormContainer');
@@ -1264,7 +1288,7 @@
             }
         }
 
-        // ================= MODAL WARGA =================
+        // Modal Warga
         function openModal() {
             if (currentRole !== 'superuser') return;
             document.getElementById('editResidentId').value = "";
@@ -1338,12 +1362,10 @@
             };
 
             if (editId) {
-                // Update ke Firebase
                 db.collection("residents").doc(String(editId)).set(residentData, { merge: true })
                     .then(() => showToast("Perubahan data warga berhasil disinkronkan ke Cloud!"))
                     .catch(err => showToast("Gagal update data: " + err.message, false));
             } else {
-                // Tambah baru ke Firebase
                 const newId = String(Date.now());
                 db.collection("residents").doc(newId).set({ id: newId, ...residentData })
                     .then(() => showToast("Warga baru berhasil disimpan ke Cloud!"))
@@ -1362,7 +1384,7 @@
             }
         }
 
-        // ================= FITUR EXCEL =================
+        // Fitur Excel
         function triggerExcelImport() {
             if (currentRole !== 'superuser') {
                 showToast("Akses ditolak: Hanya Superuser yang dapat mengunggah Excel!", false);
