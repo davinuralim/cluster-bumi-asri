@@ -1547,7 +1547,7 @@
 
         checkAuth();
     </script>
-<!-- ================= SECTION PENGADUAN WARGA (LANGSUNG EDIT & BALAS) ================= -->
+<!-- ================= SECTION PENGADUAN WARGA (DENGAN EDIT & HAPUS BALASAN) ================= -->
 <section id="pengaduan-warga" style="padding: 50px 20px; background-color: #f1f5f9; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">
   <div style="max-width: 980px; margin: 0 auto;">
     
@@ -1615,14 +1615,14 @@
         </div>
 
         <!-- Wadah List Aduan (Bisa di-scroll) -->
-        <div id="daftarPengaduan" style="display: flex; flex-direction: column; gap: 16px; max-height: 520px; overflow-y: auto; padding-right: 5px;"></div>
+        <div id="daftarPengaduan" style="display: flex; flex-direction: column; gap: 16px; max-height: 540px; overflow-y: auto; padding-right: 5px;"></div>
       </div>
 
     </div>
   </div>
 </section>
 
-<!-- SCRIPT PENGELOLA ADUAN (BEBAS LOGIN) -->
+<!-- SCRIPT PENGELOLA ADUAN (LENGKAP DENGAN EDIT & HAPUS BALASAN) -->
 <script>
   // Data Bawaan Awal
   const dataDefault = [
@@ -1649,6 +1649,9 @@
       tanggapanWaktu: "Kemarin, 13:00"
     }
   ];
+
+  // Menyimpan ID laporan yang sedang diedit balasannya
+  let idSedangDiedit = null;
 
   function getLaporan() {
     const data = localStorage.getItem("aduan_bumi_asri");
@@ -1679,7 +1682,7 @@
     }
 
     list.forEach(item => {
-      // 1. Dropdown Langsung Ubah Status
+      // 1. Dropdown Ubah Status & Hapus Laporan
       const statusSelectHTML = `
         <div style="display: flex; align-items: center; gap: 6px;">
           <select onchange="ubahStatus('${item.id}', this.value)" style="font-size: 12px; font-weight: 600; padding: 4px 8px; border-radius: 6px; border: 1px solid #94a3b8; background: #ffffff; color: #0f172a; cursor: pointer; outline: none;">
@@ -1687,35 +1690,55 @@
             <option value="Diproses" ${item.status === "Diproses" ? "selected" : ""}>🔵 Diproses</option>
             <option value="Selesai" ${item.status === "Selesai" ? "selected" : ""}>🟢 Selesai</option>
           </select>
-          <button onclick="hapusLaporan('${item.id}')" title="Hapus Laporan" style="border: none; background: #fee2e2; color: #ef4444; border-radius: 5px; padding: 4px 8px; cursor: pointer; font-size: 12px;">🗑️</button>
+          <button onclick="hapusLaporan('${item.id}')" title="Hapus Seluruh Laporan Ini" style="border: none; background: #fee2e2; color: #ef4444; border-radius: 5px; padding: 4px 8px; cursor: pointer; font-size: 12px;">🗑️</button>
         </div>
       `;
 
-      // 2. Kotak Tanggapan Resmi
-      let tanggapanHTML = "";
+      // 2. Tampilan Kotak Balasan (Normal / Sedang Diedit / Kosong)
+      let areaBalasanHTML = "";
+
       if (item.tanggapan) {
-        tanggapanHTML = `
-          <div style="margin-top: 10px; background: #f0fdf4; border-left: 3px solid #22c55e; padding: 10px 12px; border-radius: 0 8px 8px 0;">
-            <div style="font-size: 11px; font-weight: 700; color: #166534; margin-bottom: 3px; display: flex; justify-content: space-between;">
-              <span>💬 Tanggapan Pengurus:</span>
-              <span style="font-weight: normal; color: #64748b;">${item.tanggapanWaktu || ""}</span>
+        // JIKA SEDANG DIKLIK TOMBOL EDIT:
+        if (idSedangDiedit === item.id) {
+          areaBalasanHTML = `
+            <div style="margin-top: 10px; background: #f8fafc; border: 1px solid #cbd5e1; padding: 10px; border-radius: 8px;">
+              <div style="font-size: 11px; font-weight: 700; color: #334155; margin-bottom: 5px;">✏️ Edit Balasan:</div>
+              <textarea id="editTanggapanInput-${item.id}" rows="2" style="width: 100%; padding: 8px; border: 1px solid #94a3b8; border-radius: 6px; font-size: 12px; background: #ffffff; color: #0f172a; box-sizing: border-box; outline: none; resize: vertical;">${item.tanggapan}</textarea>
+              <div style="display: flex; justify-content: flex-end; gap: 6px; margin-top: 6px;">
+                <button onclick="batalEditBalasan()" style="background: #e2e8f0; color: #475569; border: none; padding: 5px 10px; border-radius: 5px; font-size: 11px; font-weight: 600; cursor: pointer;">Batal</button>
+                <button onclick="simpanEditBalasan('${item.id}')" style="background: #2563eb; color: #ffffff; border: none; padding: 5px 12px; border-radius: 5px; font-size: 11px; font-weight: 600; cursor: pointer;">Simpan Perubahan 💾</button>
+              </div>
             </div>
-            <p style="font-size: 13px; color: #1e293b; margin: 0; line-height: 1.4;">${item.tanggapan}</p>
+          `;
+        } else {
+          // JIKA TAMPIL NORMAL (Dengan Tombol Edit & Hapus Balasan):
+          areaBalasanHTML = `
+            <div style="margin-top: 10px; background: #f0fdf4; border-left: 3px solid #22c55e; padding: 10px 12px; border-radius: 0 8px 8px 0;">
+              <div style="font-size: 11px; font-weight: 700; color: #166534; margin-bottom: 4px; display: flex; justify-content: space-between; align-items: center;">
+                <span>💬 Tanggapan Pengurus <span style="font-weight: normal; color: #64748b; font-size: 10px; margin-left: 4px;">(${item.tanggapanWaktu || ""})</span></span>
+                <!-- Tombol Edit & Hapus Balasan -->
+                <div style="display: flex; gap: 5px;">
+                  <button onclick="mulaiEditBalasan('${item.id}')" title="Edit isi balasan" style="background: #ffffff; border: 1px solid #bbf7d0; color: #15803d; border-radius: 4px; padding: 2px 7px; font-size: 11px; cursor: pointer; font-weight: 600;">✏️ Edit</button>
+                  <button onclick="hapusTanggapan('${item.id}')" title="Hapus balasan ini" style="background: #fee2e2; border: 1px solid #fecaca; color: #dc2626; border-radius: 4px; padding: 2px 7px; font-size: 11px; cursor: pointer;">🗑️ Hapus</button>
+                </div>
+              </div>
+              <p style="font-size: 13px; color: #1e293b; margin: 0; line-height: 1.4;">${item.tanggapan}</p>
+            </div>
+          `;
+        }
+      } else {
+        // JIKA BELUM ADA BALASAN: Tampilkan Kolom Kirim Balasan
+        areaBalasanHTML = `
+          <div style="margin-top: 10px; border-top: 1px dashed #e2e8f0; padding-top: 8px;">
+            <div style="display: flex; gap: 6px;">
+              <input type="text" id="inputBalas-${item.id}" placeholder="Ketik balasan resmi di sini..." style="flex: 1; padding: 7px 10px; border: 1px solid #cbd5e1; border-radius: 6px; font-size: 12px; background: #ffffff; color: #1e293b; outline: none;">
+              <button onclick="kirimTanggapan('${item.id}')" style="background: #10b981; color: #ffffff; border: none; padding: 7px 14px; border-radius: 6px; font-size: 12px; font-weight: 600; cursor: pointer;">
+                Balas 💬
+              </button>
+            </div>
           </div>
         `;
       }
-
-      // 3. Kolom Balas Langsung
-      const formBalasHTML = `
-        <div style="margin-top: 10px; border-top: 1px dashed #e2e8f0; padding-top: 8px;">
-          <div style="display: flex; gap: 6px;">
-            <input type="text" id="inputBalas-${item.id}" placeholder="${item.tanggapan ? 'Edit balasan tanggapan...' : 'Ketik balasan resmi di sini...'}" style="flex: 1; padding: 7px 10px; border: 1px solid #cbd5e1; border-radius: 6px; font-size: 12px; background: #ffffff; color: #1e293b; outline: none;">
-            <button onclick="kirimTanggapan('${item.id}')" style="background: #10b981; color: #ffffff; border: none; padding: 7px 14px; border-radius: 6px; font-size: 12px; font-weight: 600; cursor: pointer;">
-              Balas 💬
-            </button>
-          </div>
-        </div>
-      `;
 
       // Buat Elemen Kartu
       const card = document.createElement("div");
@@ -1742,14 +1765,13 @@
           🕒 ${item.tanggal}
         </div>
 
-        ${tanggapanHTML}
-        ${formBalasHTML}
+        ${areaBalasanHTML}
       `;
       container.appendChild(card);
     });
   }
 
-  // Langsung Ganti Status Tanpa Konfirmasi
+  // Ganti Status Laporan
   function ubahStatus(id, statusBaru) {
     const list = getLaporan();
     const target = list.find(l => l.id === id);
@@ -1759,7 +1781,7 @@
     }
   }
 
-  // Langsung Kirim Balasan
+  // Kirim Balasan Baru
   function kirimTanggapan(id) {
     const inputField = document.getElementById(`inputBalas-${id}`);
     const pesanBalasan = inputField.value.trim();
@@ -1784,7 +1806,59 @@
     }
   }
 
-  // Hapus Laporan
+  // Masuk Mode Edit Balasan
+  function mulaiEditBalasan(id) {
+    idSedangDiedit = id;
+    tampilkanLaporan();
+  }
+
+  // Batal Edit Balasan
+  function batalEditBalasan() {
+    idSedangDiedit = null;
+    tampilkanLaporan();
+  }
+
+  // Simpan Hasil Edit Balasan
+  function simpanEditBalasan(id) {
+    const editInput = document.getElementById(`editTanggapanInput-${id}`);
+    const teksBaru = editInput.value.trim();
+
+    if (!teksBaru) {
+      alert("Isi balasan tidak boleh kosong.");
+      return;
+    }
+
+    const list = getLaporan();
+    const target = list.find(l => l.id === id);
+    if (target) {
+      const now = new Date().toLocaleDateString('id-ID', {
+        day: 'numeric',
+        month: 'short',
+        hour: '2-digit',
+        minute: '2-digit'
+      });
+      target.tanggapan = teksBaru;
+      target.tanggapanWaktu = now + " (Diedit)";
+      idSedangDiedit = null;
+      simpanLaporan(list);
+    }
+  }
+
+  // Hapus Balasan Saja
+  function hapusTanggapan(id) {
+    if (confirm("Hapus tanggapan/balasan ini?")) {
+      const list = getLaporan();
+      const target = list.find(l => l.id === id);
+      if (target) {
+        target.tanggapan = null;
+        target.tanggapanWaktu = null;
+        idSedangDiedit = null;
+        simpanLaporan(list);
+      }
+    }
+  }
+
+  // Hapus Seluruh Laporan
   function hapusLaporan(id) {
     if (confirm("Hapus laporan ini secara permanen?")) {
       let list = getLaporan();
@@ -1793,7 +1867,7 @@
     }
   }
 
-  // Tambah Aduan dari Form
+  // Tambah Aduan dari Form Warga
   function tambahLaporan(e) {
     e.preventDefault();
 
@@ -1829,7 +1903,7 @@
     alert("✅ Laporan berhasil dikirim!");
   }
 
-  // Inisialisasi awal
+  // Render awal saat web dibuka
   tampilkanLaporan();
 </script>
 <!-- ================= END SECTION PENGADUAN ================= -->
