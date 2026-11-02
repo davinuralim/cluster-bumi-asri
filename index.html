@@ -1547,7 +1547,7 @@
 
         checkAuth();
     </script>
-<!-- ================= SECTION PENGADUAN WARGA (LANGSUNG MODE PENGURUS/SUPERUSER) ================= -->
+<!-- ================= SECTION PENGADUAN WARGA (LANGSUNG EDIT & BALAS) ================= -->
 <section id="pengaduan-warga" style="padding: 50px 20px; background-color: #f1f5f9; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">
   <div style="max-width: 980px; margin: 0 auto;">
     
@@ -1603,14 +1603,14 @@
       <!-- PAPAN DAFTAR PENGADUAN WARGA -->
       <div style="background: #ffffff; padding: 25px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); border: 1px solid #e2e8f0;">
         
-        <!-- Header Papan: Rapi & Anti-Patah -->
+        <!-- Header Papan -->
         <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 15px; border-bottom: 2px solid #10b981; padding-bottom: 10px;">
-          <div style="display: flex; align-items: center; gap: 8px; flex-wrap: nowrap;">
+          <div style="display: flex; align-items: center; gap: 8px;">
             <h3 style="font-size: 18px; color: #1e293b; margin: 0; white-space: nowrap;">📋 Papan Laporan Warga</h3>
             <span id="totalLaporan" style="font-size: 12px; background: #e0f2fe; color: #0284c7; padding: 3px 9px; border-radius: 12px; font-weight: 700; white-space: nowrap;">0 Laporan</span>
           </div>
-          <span style="font-size: 11px; color: #10b981; font-weight: 600; background: #ecfdf5; padding: 4px 8px; border-radius: 6px;">
-            ⚡ Kelola Langsung
+          <span style="font-size: 11px; color: #059669; font-weight: 700; background: #ecfdf5; padding: 4px 8px; border-radius: 6px;">
+            Mode Superuser Aktif ⚡
           </span>
         </div>
 
@@ -1622,7 +1622,7 @@
   </div>
 </section>
 
-<!-- SCRIPT PENGELOLA ADUAN (LANGSUNG BISA UBAH STATUS & BALAS) -->
+<!-- SCRIPT PENGELOLA ADUAN (BEBAS LOGIN) -->
 <script>
   // Data Bawaan Awal
   const dataDefault = [
@@ -1632,10 +1632,10 @@
       blok: "Blok A No. 12",
       kategori: "Fasilitas Umum",
       pesan: "Lampu penerangan jalan di pertigaan dekat pos satpam padam sejak 2 hari lalu.",
-      tanggal: "02 Nov 2026, 10:15",
+      tanggal: "Baru saja",
       status: "Diproses",
-      tanggapan: "Terima kasih infonya pak. Sudah kami panggil teknisi listrik perumahan, estimasi sore ini selesai diperbaiki.",
-      tanggapanWaktu: "02 Nov 2026, 11:30"
+      tanggapan: "Terima kasih infonya pak. Sudah kami panggil teknisi listrik perumahan, sore ini selesai diperbaiki.",
+      tanggapanWaktu: "Hari ini, 11:30"
     },
     {
       id: "LAP-002",
@@ -1643,10 +1643,10 @@
       blok: "Blok C No. 05",
       kategori: "Kebersihan & Sampah",
       pesan: "Truk sampah belum datang melewati blok C pagi ini, tolong dicek.",
-      tanggal: "01 Nov 2026, 08:30",
+      tanggal: "Kemarin",
       status: "Selesai",
-      tanggapan: "Truk sampah tadi pagi sempat terlambat karena armada ganti ban, sekarang sampah di Blok C sudah terangkut semua.",
-      tanggapanWaktu: "01 Nov 2026, 13:00"
+      tanggapan: "Armada sampah sempat ganti ban di depo. Sekarang sampah di Blok C sudah terangkut semua.",
+      tanggapanWaktu: "Kemarin, 13:00"
     }
   ];
 
@@ -1679,7 +1679,7 @@
     }
 
     list.forEach(item => {
-      // 1. Dropdown Ubah Status Langsung
+      // 1. Dropdown Langsung Ubah Status
       const statusSelectHTML = `
         <div style="display: flex; align-items: center; gap: 6px;">
           <select onchange="ubahStatus('${item.id}', this.value)" style="font-size: 12px; font-weight: 600; padding: 4px 8px; border-radius: 6px; border: 1px solid #94a3b8; background: #ffffff; color: #0f172a; cursor: pointer; outline: none;">
@@ -1691,7 +1691,7 @@
         </div>
       `;
 
-      // 2. Kotak Tanggapan Resmi yang Sudah Terkirim
+      // 2. Kotak Tanggapan Resmi
       let tanggapanHTML = "";
       if (item.tanggapan) {
         tanggapanHTML = `
@@ -1705,7 +1705,7 @@
         `;
       }
 
-      // 3. Kolom Balas Langsung di Kartu
+      // 3. Kolom Balas Langsung
       const formBalasHTML = `
         <div style="margin-top: 10px; border-top: 1px dashed #e2e8f0; padding-top: 8px;">
           <div style="display: flex; gap: 6px;">
@@ -1717,7 +1717,7 @@
         </div>
       `;
 
-      // Buat Kartu
+      // Buat Elemen Kartu
       const card = document.createElement("div");
       card.style.cssText = "border: 1px solid #e2e8f0; border-radius: 10px; padding: 15px; background: #ffffff; box-shadow: 0 1px 3px rgba(0,0,0,0.03);";
       card.innerHTML = `
@@ -1749,7 +1749,7 @@
     });
   }
 
-  // Fungsi Langsung Ganti Status
+  // Langsung Ganti Status Tanpa Konfirmasi
   function ubahStatus(id, statusBaru) {
     const list = getLaporan();
     const target = list.find(l => l.id === id);
@@ -1759,7 +1759,7 @@
     }
   }
 
-  // Fungsi Langsung Kirim Tanggapan / Balas
+  // Langsung Kirim Balasan
   function kirimTanggapan(id) {
     const inputField = document.getElementById(`inputBalas-${id}`);
     const pesanBalasan = inputField.value.trim();
@@ -1784,7 +1784,7 @@
     }
   }
 
-  // Fungsi Hapus Laporan
+  // Hapus Laporan
   function hapusLaporan(id) {
     if (confirm("Hapus laporan ini secara permanen?")) {
       let list = getLaporan();
@@ -1826,10 +1826,10 @@
 
     document.getElementById("formAduan").reset();
     simpanLaporan(list);
-    alert("✅ Laporan Anda berhasil dikirim ke papan warga!");
+    alert("✅ Laporan berhasil dikirim!");
   }
 
-  // Render awal saat web dibuka
+  // Inisialisasi awal
   tampilkanLaporan();
 </script>
 <!-- ================= END SECTION PENGADUAN ================= -->
