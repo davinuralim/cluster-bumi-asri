@@ -1547,22 +1547,30 @@
 
         checkAuth();
     </script>
-<!-- ================= SECTION PENGADUAN WARGA (DILENGKAPI FITUR SUPER USER) ================= -->
+<!-- ================= SECTION PENGADUAN WARGA (SUPERUSER & TANGGAPAN RESMI) ================= -->
 <section id="pengaduan-warga" style="padding: 50px 20px; background-color: #f1f5f9; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">
-  <div style="max-width: 950px; margin: 0 auto;">
+  <div style="max-width: 980px; margin: 0 auto;">
     
-    <!-- Header Section -->
-    <div style="text-align: center; margin-bottom: 35px;">
-      <h2 style="font-size: 28px; color: #0f172a; margin-bottom: 10px; font-weight: 700;">📢 Pusat Pengaduan & Aspirasi Warga</h2>
-      <p style="color: #64748b; font-size: 15px; margin: 0; max-width: 600px; margin: 0 auto;">
-        Transparansi lingkungan Cluster Bumi Asri. Laporkan kendala, pantau penanganan, dan lihat laporan bersama warga lainnya.
-      </p>
+    <!-- Header -->
+    <div style="text-align: center; margin-bottom: 30px;">
+      <h2 style="font-size: 28px; color: #0f172a; margin-bottom: 8px; font-weight: 700;">📢 Pusat Pengaduan & Aspirasi Warga</h2>
+      <p style="color: #64748b; font-size: 15px; margin: 0;">Cluster Bumi Asri — Transparan, Cepat Ditanggapi Pengurus.</p>
     </div>
 
-    <!-- Layout Grid: Form (Kiri) & Papan Aduan (Kanan) -->
+    <!-- Banner Jika Superuser Sedang Login -->
+    <div id="bannerSuperuser" style="display: none; background: #e0f2fe; border: 1px solid #7dd3fc; color: #0369a1; padding: 12px 18px; border-radius: 10px; margin-bottom: 25px; align-items: center; justify-content: space-between;">
+      <div style="font-size: 14px; font-weight: 600;">
+        👑 <span>Login sebagai <strong>Superuser (Pengurus Cluster)</strong></span> — Anda memiliki hak penuh untuk mengubah status, membalas, dan menghapus laporan.
+      </div>
+      <button onclick="logoutSuperuser()" style="background: #ef4444; color: #fff; border: none; padding: 6px 14px; border-radius: 6px; font-size: 12px; font-weight: bold; cursor: pointer;">
+        🚪 Keluar Akun
+      </button>
+    </div>
+
+    <!-- Layout Grid: Form (Kiri) & List Aduan (Kanan) -->
     <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(330px, 1fr)); gap: 25px; align-items: start;">
       
-      <!-- KOTAK FORMULIR -->
+      <!-- FORM KIRIM LAPORAN WARGA -->
       <div style="background: #ffffff; padding: 25px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); border: 1px solid #e2e8f0;">
         <h3 style="font-size: 18px; color: #1e293b; margin-top: 0; margin-bottom: 15px; border-bottom: 2px solid #3b82f6; padding-bottom: 8px;">
           ✍️ Tulis Laporan Baru
@@ -1571,21 +1579,21 @@
         <form id="formAduan" onsubmit="tambahLaporan(event)">
           <div style="margin-bottom: 14px;">
             <label style="display: block; font-size: 13px; font-weight: 600; color: #475569; margin-bottom: 5px;">Nama Pelapor</label>
-            <input type="text" id="inputNama" required placeholder="Nama Anda (bisa anonim/warga)" style="width: 100%; padding: 10px; border: 1px solid #cbd5e1; border-radius: 8px; font-size: 14px; box-sizing: border-box; background: #fff; color: #1e293b; outline: none;">
+            <input type="text" id="inputNama" required placeholder="Nama Anda (bisa anonim)" style="width: 100%; padding: 10px; border: 1px solid #cbd5e1; border-radius: 8px; font-size: 14px; box-sizing: border-box; background: #ffffff; color: #1e293b; outline: none;">
           </div>
 
           <div style="margin-bottom: 14px;">
             <label style="display: block; font-size: 13px; font-weight: 600; color: #475569; margin-bottom: 5px;">Blok & No. Rumah</label>
-            <input type="text" id="inputBlok" required placeholder="Contoh: Blok B No. 08" style="width: 100%; padding: 10px; border: 1px solid #cbd5e1; border-radius: 8px; font-size: 14px; box-sizing: border-box; background: #fff; color: #1e293b; outline: none;">
+            <input type="text" id="inputBlok" required placeholder="Contoh: Blok B No. 08" style="width: 100%; padding: 10px; border: 1px solid #cbd5e1; border-radius: 8px; font-size: 14px; box-sizing: border-box; background: #ffffff; color: #1e293b; outline: none;">
           </div>
 
           <div style="margin-bottom: 14px;">
             <label style="display: block; font-size: 13px; font-weight: 600; color: #475569; margin-bottom: 5px;">Kategori Masalah</label>
-            <select id="inputKategori" required style="width: 100%; padding: 10px; border: 1px solid #cbd5e1; border-radius: 8px; font-size: 14px; box-sizing: border-box; background-color: #fff; color: #1e293b; outline: none;">
+            <select id="inputKategori" required style="width: 100%; padding: 10px; border: 1px solid #cbd5e1; border-radius: 8px; font-size: 14px; box-sizing: border-box; background-color: #ffffff; color: #1e293b; outline: none;">
               <option value="">-- Pilih Kategori --</option>
               <option value="Fasilitas Umum">Fasilitas Umum (Lampu/Jalan)</option>
               <option value="Kebersihan & Sampah">Kebersihan & Sampah</option>
-              <option value="Keamanan & Ketertiban">Keamanan & Parkir Liar</option>
+              <option value="Keamanan & Ketertiban">Keamanan & Ketertiban</option>
               <option value="Saluran Air / Drainase">Saluran Air / Drainase</option>
               <option value="Lainnya">Usulan / Lain-lain</option>
             </select>
@@ -1593,7 +1601,7 @@
 
           <div style="margin-bottom: 18px;">
             <label style="display: block; font-size: 13px; font-weight: 600; color: #475569; margin-bottom: 5px;">Rincian Pengaduan</label>
-            <textarea id="inputPesan" rows="3" required placeholder="Tuliskan kendala secara jelas..." style="width: 100%; padding: 10px; border: 1px solid #cbd5e1; border-radius: 8px; font-size: 14px; box-sizing: border-box; background: #fff; color: #1e293b; outline: none; resize: vertical;"></textarea>
+            <textarea id="inputPesan" rows="3" required placeholder="Tuliskan kendala Anda secara jelas..." style="width: 100%; padding: 10px; border: 1px solid #cbd5e1; border-radius: 8px; font-size: 14px; box-sizing: border-box; background: #ffffff; color: #1e293b; outline: none; resize: vertical;"></textarea>
           </div>
 
           <button type="submit" style="width: 100%; background: #2563eb; color: #fff; padding: 12px; border: none; border-radius: 8px; font-size: 15px; font-weight: 600; cursor: pointer;">
@@ -1602,49 +1610,77 @@
         </form>
       </div>
 
-      <!-- KOTAK PAPAN PENGADUAN WARGA -->
+      <!-- PAPAN DAFTAR PENGADUAN WARGA -->
       <div style="background: #ffffff; padding: 25px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); border: 1px solid #e2e8f0;">
-        
         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; border-bottom: 2px solid #10b981; padding-bottom: 8px;">
           <div>
-            <h3 style="font-size: 18px; color: #1e293b; margin: 0; display: inline-block;">📋 Papan Laporan</h3>
+            <h3 style="font-size: 18px; color: #1e293b; margin: 0; display: inline-block;">📋 Papan Laporan Warga</h3>
             <span id="totalLaporan" style="font-size: 11px; background: #e0f2fe; color: #0284c7; padding: 2px 7px; border-radius: 10px; font-weight: bold; margin-left: 6px;">0 Laporan</span>
           </div>
 
-          <!-- Tombol Super User / Admin Toggle -->
-          <button id="btnAdminToggle" onclick="toggleModeAdmin()" style="font-size: 12px; padding: 5px 10px; border-radius: 6px; border: 1px solid #cbd5e1; background: #f8fafc; color: #334155; cursor: pointer; font-weight: 600;">
-            🔑 Login Admin
+          <!-- Tombol Buka Modal Login (muncul saat belum login) -->
+          <button id="btnBukaLogin" onclick="bukaModalLogin()" style="font-size: 12px; padding: 6px 12px; border-radius: 6px; border: 1px solid #cbd5e1; background: #f8fafc; color: #334155; cursor: pointer; font-weight: 600;">
+            👑 Login Superuser
           </button>
         </div>
 
-        <div id="adminNotice" style="display: none; background: #fef3c7; border: 1px dashed #f59e0b; padding: 8px 12px; border-radius: 6px; font-size: 12px; color: #92400e; margin-bottom: 12px;">
-          ⚡ <strong>Mode Pengurus Aktif:</strong> Anda dapat mengubah status laporan melalui dropdown atau menghapusnya.
-        </div>
-
-        <!-- Wadah List Laporan -->
-        <div id="daftarPengaduan" style="display: flex; flex-direction: column; gap: 14px; max-height: 440px; overflow-y: auto; padding-right: 5px;">
-        </div>
+        <!-- Wadah List Aduan -->
+        <div id="daftarPengaduan" style="display: flex; flex-direction: column; gap: 16px; max-height: 520px; overflow-y: auto; padding-right: 5px;"></div>
       </div>
 
     </div>
   </div>
+
+  <!-- POP-UP / MODAL LOGIN SUPERUSER -->
+  <div id="modalLogin" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(15, 23, 42, 0.6); z-index: 99999; justify-content: center; align-items: center;">
+    <div style="background: #ffffff; width: 90%; max-width: 380px; padding: 28px; border-radius: 12px; box-shadow: 0 10px 25px rgba(0,0,0,0.2);">
+      <h3 style="margin-top: 0; color: #0f172a; font-size: 18px; margin-bottom: 6px;">👑 Login Akun Superuser</h3>
+      <p style="font-size: 13px; color: #64748b; margin-top: 0; margin-bottom: 18px;">Khusus Pengurus / Admin Cluster Bumi Asri.</p>
+      
+      <form onsubmit="prosesLoginSuperuser(event)">
+        <div style="margin-bottom: 14px;">
+          <label style="display: block; font-size: 13px; font-weight: 600; color: #334155; margin-bottom: 5px;">Username</label>
+          <input type="text" id="superUserField" required placeholder="Masukkan username" style="width: 100%; padding: 10px; border: 1px solid #cbd5e1; border-radius: 6px; box-sizing: border-box; background:#fff; color:#0f172a; outline: none;">
+        </div>
+
+        <div style="margin-bottom: 20px;">
+          <label style="display: block; font-size: 13px; font-weight: 600; color: #334155; margin-bottom: 5px;">Password</label>
+          <input type="password" id="superPassField" required placeholder="Masukkan password" style="width: 100%; padding: 10px; border: 1px solid #cbd5e1; border-radius: 6px; box-sizing: border-box; background:#fff; color:#0f172a; outline: none;">
+        </div>
+
+        <div style="display: flex; gap: 10px;">
+          <button type="button" onclick="tutupModalLogin()" style="flex: 1; padding: 10px; border: 1px solid #cbd5e1; background: #f8fafc; color: #475569; border-radius: 6px; font-weight: 600; cursor: pointer;">Batal</button>
+          <button type="submit" style="flex: 1; padding: 10px; border: none; background: #2563eb; color: #ffffff; border-radius: 6px; font-weight: 600; cursor: pointer;">Masuk</button>
+        </div>
+      </form>
+    </div>
+  </div>
 </section>
 
-<!-- SCRIPT LOGIKA SUPER USER & PENGELOLA ADUAN -->
+<!-- SCRIPT LOGIKA PENGADUAN & SUPERUSER -->
 <script>
-  // PIN default untuk Pengurus (bisa kamu ubah sesuka hati)
-  const PIN_SUPER_USER = "123";
+  // ================= PENGATURAN AKUN SUPERUSER =================
+  // Anda bisa mengganti username & password ini kapan saja
+  const AKUN_SUPERUSER = {
+    username: "admin",
+    password: "123"
+  };
 
-  // Data bawaan awal
-  const dataAwal = [
+  // Cek sesi status login (tersimpan di localStorage agar tetap login walau refresh)
+  let isSuperUser = localStorage.getItem("status_superuser_bumi_asri") === "true";
+
+  // Data Bawaan Awal
+  const dataDefault = [
     {
       id: "LAP-001",
       nama: "Pak Hendra",
       blok: "Blok A No. 12",
       kategori: "Fasilitas Umum",
       pesan: "Lampu penerangan jalan di pertigaan dekat pos satpam padam sejak 2 hari lalu.",
-      tanggal: "Baru saja",
-      status: "Diproses"
+      tanggal: "02 Nov 2026, 10:15",
+      status: "Diproses",
+      tanggapan: "Terima kasih infonya pak. Sudah kami panggil teknisi listrik perumahan, estimasi sore ini selesai diperbaiki.",
+      tanggapanWaktu: "02 Nov 2026, 11:30"
     },
     {
       id: "LAP-002",
@@ -1652,88 +1688,110 @@
       blok: "Blok C No. 05",
       kategori: "Kebersihan & Sampah",
       pesan: "Truk sampah belum datang melewati blok C pagi ini, tolong dicek.",
-      tanggal: "Kemarin",
-      status: "Selesai"
+      tanggal: "01 Nov 2026, 08:30",
+      status: "Selesai",
+      tanggapan: "Truk sampah tadi pagi sempat terlambat karena armada ganti ban, sekarang sampah di Blok C sudah terangkut semua.",
+      tanggapanWaktu: "01 Nov 2026, 13:00"
     }
   ];
 
-  // Cek apakah admin sedang login di sesi browser ini
-  let isAdmin = sessionStorage.getItem("admin_bumi_asri") === "true";
-
   function getLaporan() {
-    const tersimpan = localStorage.getItem("aduan_bumi_asri");
-    if (!tersimpan) {
-      localStorage.setItem("aduan_bumi_asri", JSON.stringify(dataAwal));
-      return dataAwal;
+    const data = localStorage.getItem("aduan_bumi_asri");
+    if (!data) {
+      localStorage.setItem("aduan_bumi_asri", JSON.stringify(dataDefault));
+      return dataDefault;
     }
-    return JSON.parse(tersimpan);
+    return JSON.parse(data);
   }
 
-  function simpanLaporan(list) {
-    localStorage.setItem("aduan_bumi_asri", JSON.stringify(list));
+  function simpanLaporan(data) {
+    localStorage.setItem("aduan_bumi_asri", JSON.stringify(data));
     tampilkanLaporan();
   }
 
-  // Tampilkan data laporan
+  // Tampilkan Seluruh Laporan
   function tampilkanLaporan() {
-    const daftar = getLaporan();
+    const list = getLaporan();
     const container = document.getElementById("daftarPengaduan");
     const totalBadge = document.getElementById("totalLaporan");
-    const btnToggle = document.getElementById("btnAdminToggle");
-    const adminNotice = document.getElementById("adminNotice");
+    const banner = document.getElementById("bannerSuperuser");
+    const btnBukaLogin = document.getElementById("btnBukaLogin");
 
-    // Perbarui Tampilan Mode Admin
-    if (isAdmin) {
-      btnToggle.innerText = "🚪 Keluar Admin";
-      btnToggle.style.background = "#fee2e2";
-      btnToggle.style.color = "#b91c1c";
-      btnToggle.style.borderColor = "#fca5a5";
-      adminNotice.style.display = "block";
+    // Perbarui UI sesuai status login Superuser
+    if (isSuperUser) {
+      banner.style.display = "flex";
+      btnBukaLogin.style.display = "none";
     } else {
-      btnToggle.innerText = "🔑 Login Admin";
-      btnToggle.style.background = "#f8fafc";
-      btnToggle.style.color = "#334155";
-      btnToggle.style.borderColor = "#cbd5e1";
-      adminNotice.style.display = "none";
+      banner.style.display = "none";
+      btnBukaLogin.style.display = "block";
     }
 
-    totalBadge.innerText = `${daftar.length} Laporan`;
+    totalBadge.innerText = `${list.length} Laporan`;
     container.innerHTML = "";
 
-    if (daftar.length === 0) {
-      container.innerHTML = `<div style="text-align:center; padding: 30px; color:#94a3b8; font-size:14px;">Belum ada pengaduan warga.</div>`;
+    if (list.length === 0) {
+      container.innerHTML = `<div style="text-align:center; padding: 30px; color:#94a3b8; font-size:14px;">Belum ada laporan warga.</div>`;
       return;
     }
 
-    daftar.forEach(item => {
-      // Warna Badge biasa (untuk mode warga)
+    list.forEach(item => {
+      // Warna Badge biasa
       let badgeBg = "#fef3c7", badgeColor = "#b45309";
       if (item.status === "Diproses") { badgeBg = "#dbeafe"; badgeColor = "#1d4ed8"; }
       else if (item.status === "Selesai") { badgeBg = "#dcfce7"; badgeColor = "#15803d"; }
 
-      // Kontrol status: Jika mode admin aktif, buat jadi DROPDOWN yang bisa diubah
-      let statusControlHTML = "";
-      if (isAdmin) {
-        statusControlHTML = `
+      // Bagian kontrol status
+      let kontrolStatusHTML = "";
+      if (isSuperUser) {
+        kontrolStatusHTML = `
           <div style="display:flex; align-items:center; gap: 6px;">
-            <select onchange="ubahStatus('${item.id}', this.value)" style="font-size: 11px; font-weight:600; padding: 4px 6px; border-radius: 6px; border: 1px solid #94a3b8; background: #ffffff; cursor: pointer;">
+            <select onchange="ubahStatus('${item.id}', this.value)" style="font-size: 12px; font-weight:600; padding: 4px 6px; border-radius: 6px; border: 1px solid #94a3b8; background: #fff; cursor: pointer; color:#0f172a;">
               <option value="Menunggu" ${item.status === "Menunggu" ? "selected" : ""}>🟡 Menunggu</option>
               <option value="Diproses" ${item.status === "Diproses" ? "selected" : ""}>🔵 Diproses</option>
               <option value="Selesai" ${item.status === "Selesai" ? "selected" : ""}>🟢 Selesai</option>
             </select>
-            <button onclick="hapusLaporan('${item.id}')" title="Hapus Laporan" style="border:none; background:#fee2e2; color:#ef4444; border-radius:4px; padding:4px 7px; cursor:pointer; font-size:12px;">🗑️</button>
+            <button onclick="hapusLaporan('${item.id}')" title="Hapus Laporan" style="border:none; background:#fee2e2; color:#ef4444; border-radius:5px; padding:4px 8px; cursor:pointer; font-size:12px;">🗑️</button>
           </div>
         `;
       } else {
-        statusControlHTML = `
-          <span style="font-size: 11px; padding: 3px 8px; border-radius: 6px; font-weight: 600; background: ${badgeBg}; color: ${badgeColor};">
+        kontrolStatusHTML = `
+          <span style="font-size: 11px; padding: 3px 9px; border-radius: 6px; font-weight: 700; background: ${badgeBg}; color: ${badgeColor};">
             ${item.status}
           </span>
         `;
       }
 
+      // Bagian Tanggapan / Balasan Pengurus
+      let tanggapanHTML = "";
+      if (item.tanggapan) {
+        tanggapanHTML = `
+          <div style="margin-top: 10px; background: #f0fdf4; border-left: 3px solid #22c55e; padding: 10px 12px; border-radius: 0 8px 8px 0;">
+            <div style="font-size: 11px; font-weight: 700; color: #166534; margin-bottom: 3px; display:flex; justify-content:space-between;">
+              <span>💬 Tanggapan Pengurus:</span>
+              <span style="font-weight: normal; color: #64748b;">${item.tanggapanWaktu || ""}</span>
+            </div>
+            <p style="font-size: 13px; color: #1e293b; margin: 0; line-height: 1.4;">${item.tanggapan}</p>
+          </div>
+        `;
+      }
+
+      // Input Balas untuk Superuser
+      let formBalasHTML = "";
+      if (isSuperUser) {
+        formBalasHTML = `
+          <div style="margin-top: 10px; border-top: 1px dashed #e2e8f0; padding-top: 8px;">
+            <div style="display: flex; gap: 6px;">
+              <input type="text" id="inputBalas-${item.id}" placeholder="${item.tanggapan ? 'Edit balasan tanggapan...' : 'Ketik balasan resmi pengurus...'}" style="flex:1; padding: 7px 10px; border: 1px solid #cbd5e1; border-radius: 6px; font-size: 12px; background: #ffffff; color: #1e293b; outline: none;">
+              <button onclick="kirimTanggapan('${item.id}')" style="background: #10b981; color: #fff; border: none; padding: 7px 12px; border-radius: 6px; font-size: 12px; font-weight: 600; cursor: pointer;">
+                Balas 💬
+              </button>
+            </div>
+          </div>
+        `;
+      }
+
       const card = document.createElement("div");
-      card.style.cssText = "border: 1px solid #e2e8f0; border-radius: 8px; padding: 14px; background: #ffffff; box-shadow: 0 1px 3px rgba(0,0,0,0.02);";
+      card.style.cssText = "border: 1px solid #e2e8f0; border-radius: 10px; padding: 15px; background: #ffffff; box-shadow: 0 1px 3px rgba(0,0,0,0.03);";
       card.innerHTML = `
         <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 6px;">
           <div>
@@ -1741,45 +1799,61 @@
             <strong style="font-size: 14px; color: #1e293b;">${item.nama}</strong> 
             <span style="font-size: 12px; color: #64748b;">(${item.blok})</span>
           </div>
-          <div>${statusControlHTML}</div>
+          <div>${kontrolStatusHTML}</div>
         </div>
         
         <div style="font-size: 12px; color: #2563eb; font-weight: 600; margin-bottom: 6px;">
           📌 ${item.kategori}
         </div>
         
-        <p style="font-size: 13px; color: #334155; margin: 0 0 8px 0; line-height: 1.4;">
+        <p style="font-size: 13px; color: #334155; margin: 0 0 6px 0; line-height: 1.45;">
           ${item.pesan}
         </p>
 
         <div style="font-size: 11px; color: #94a3b8; text-align: right;">
           🕒 ${item.tanggal}
         </div>
+
+        ${tanggapanHTML}
+        ${formBalasHTML}
       `;
       container.appendChild(card);
     });
   }
 
-  // Fungsi Login/Logout Super User
-  function toggleModeAdmin() {
-    if (isAdmin) {
-      isAdmin = false;
-      sessionStorage.removeItem("admin_bumi_asri");
+  // ================= FUNGSI SUPERUSER =================
+  function bukaModalLogin() {
+    document.getElementById("modalLogin").style.display = "flex";
+  }
+
+  function tutupModalLogin() {
+    document.getElementById("modalLogin").style.display = "none";
+  }
+
+  function prosesLoginSuperuser(e) {
+    e.preventDefault();
+    const u = document.getElementById("superUserField").value.trim();
+    const p = document.getElementById("superPassField").value.trim();
+
+    if (u === AKUN_SUPERUSER.username && p === AKUN_SUPERUSER.password) {
+      isSuperUser = true;
+      localStorage.setItem("status_superuser_bumi_asri", "true");
+      tutupModalLogin();
       tampilkanLaporan();
+      alert("✅ Berhasil login sebagai Superuser! Anda sekarang bisa merubah status dan membalas laporan.");
     } else {
-      const pin = prompt("Masukkan PIN Super User / Pengurus:");
-      if (pin === PIN_SUPER_USER) {
-        isAdmin = true;
-        sessionStorage.setItem("admin_bumi_asri", "true");
-        tampilkanLaporan();
-        alert("🔓 Mode Super User aktif! Sekarang Anda bisa mengganti status laporan.");
-      } else if (pin !== null) {
-        alert("❌ PIN salah!");
-      }
+      alert("❌ Username atau Password salah!");
     }
   }
 
-  // Fungsi Ubah Status oleh Admin
+  function logoutSuperuser() {
+    if (confirm("Keluar dari mode Superuser?")) {
+      isSuperUser = false;
+      localStorage.removeItem("status_superuser_bumi_asri");
+      tampilkanLaporan();
+    }
+  }
+
   function ubahStatus(id, statusBaru) {
     const list = getLaporan();
     const target = list.find(l => l.id === id);
@@ -1789,16 +1863,39 @@
     }
   }
 
-  // Fungsi Hapus Laporan oleh Admin
+  function kirimTanggapan(id) {
+    const inputField = document.getElementById(`inputBalas-${id}`);
+    const pesanBalasan = inputField.value.trim();
+
+    if (!pesanBalasan) {
+      alert("Tuliskan isi balasan terlebih dahulu.");
+      return;
+    }
+
+    const list = getLaporan();
+    const target = list.find(l => l.id === id);
+    if (target) {
+      const now = new Date().toLocaleDateString('id-ID', {
+        day: 'numeric',
+        month: 'short',
+        hour: '2-digit',
+        minute: '2-digit'
+      });
+      target.tanggapan = pesanBalasan;
+      target.tanggapanWaktu = now;
+      simpanLaporan(list);
+    }
+  }
+
   function hapusLaporan(id) {
-    if (confirm("Apakah Anda yakin ingin menghapus laporan ini?")) {
+    if (confirm("Hapus laporan ini secara permanen?")) {
       let list = getLaporan();
       list = list.filter(l => l.id !== id);
       simpanLaporan(list);
     }
   }
 
-  // Tambah aduan baru dari form
+  // ================= FUNGSI WARGA (SUBMIT) =================
   function tambahLaporan(e) {
     e.preventDefault();
 
@@ -1824,15 +1921,17 @@
       kategori: kategori,
       pesan: pesan,
       tanggal: waktuSekarang,
-      status: "Menunggu"
+      status: "Menunggu",
+      tanggapan: null,
+      tanggapanWaktu: null
     });
 
     document.getElementById("formAduan").reset();
     simpanLaporan(list);
-    alert("✅ Laporan Anda berhasil dipublikasikan ke papan pengaduan!");
+    alert("✅ Laporan Anda berhasil dikirim ke papan warga!");
   }
 
-  // Jalankan saat pertama kali dibuka
+  // Inisialisasi awal
   tampilkanLaporan();
 </script>
 <!-- ================= END SECTION PENGADUAN ================= -->
