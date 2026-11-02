@@ -1547,5 +1547,204 @@
 
         checkAuth();
     </script>
+    <!-- ================= SECTION PENGADUAN WARGA (IN-WEB) ================= -->
+<section id="pengaduan-warga" style="padding: 50px 20px; background-color: #f1f5f9; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">
+  <div style="max-width: 900px; margin: 0 auto;">
+    
+    <!-- Header Section -->
+    <div style="text-align: center; margin-bottom: 35px;">
+      <h2 style="font-size: 28px; color: #0f172a; margin-bottom: 10px; font-weight: 700;">📢 Pusat Pengaduan & Aspirasi Warga</h2>
+      <p style="color: #64748b; font-size: 15px; margin: 0; max-width: 600px; margin: 0 auto;">
+        Transparansi lingkungan Cluster Bumi Asri. Laporkan kendala, pantau penanganan, dan lihat laporan bersama warga lainnya.
+      </p>
+    </div>
+
+    <!-- Layout Grid: Form (Kiri) & Papan Aduan (Kanan) -->
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 25px; align-items: start;">
+      
+      <!-- KOTAK FORMULIR -->
+      <div style="background: #ffffff; padding: 25px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); border: 1px solid #e2e8f0;">
+        <h3 style="font-size: 18px; color: #1e293b; margin-top: 0; margin-bottom: 15px; border-bottom: 2px solid #3b82f6; padding-bottom: 8px;">
+          ✍️ Tulis Laporan Baru
+        </h3>
+
+        <form id="formAduan" onsubmit="tambahLaporan(event)">
+          <div style="margin-bottom: 14px;">
+            <label style="display: block; font-size: 13px; font-weight: 600; color: #475569; margin-bottom: 5px;">Nama Pelapor</label>
+            <input type="text" id="inputNama" required placeholder="Nama Anda (bisa anonim/warga)" style="width: 100%; padding: 10px; border: 1px solid #cbd5e1; border-radius: 8px; font-size: 14px; box-sizing: border-box; outline: none;">
+          </div>
+
+          <div style="margin-bottom: 14px;">
+            <label style="display: block; font-size: 13px; font-weight: 600; color: #475569; margin-bottom: 5px;">Blok & No. Rumah</label>
+            <input type="text" id="inputBlok" required placeholder="Contoh: Blok B No. 08" style="width: 100%; padding: 10px; border: 1px solid #cbd5e1; border-radius: 8px; font-size: 14px; box-sizing: border-box; outline: none;">
+          </div>
+
+          <div style="margin-bottom: 14px;">
+            <label style="display: block; font-size: 13px; font-weight: 600; color: #475569; margin-bottom: 5px;">Kategori Masalah</label>
+            <select id="inputKategori" required style="width: 100%; padding: 10px; border: 1px solid #cbd5e1; border-radius: 8px; font-size: 14px; box-sizing: border-box; outline: none; background-color: #fff;">
+              <option value="">-- Pilih Kategori --</option>
+              <option value="Fasilitas Umum">Fasilitas Umum (Lampu/Jalan)</option>
+              <option value="Kebersihan & Sampah">Kebersihan & Sampah</option>
+              <option value="Keamanan & Ketertiban">Keamanan & Parkir Liar</option>
+              <option value="Saluran Air / Drainase">Saluran Air / Banjir</option>
+              <option value="Lainnya">Usulan / Lain-lain</option>
+            </select>
+          </div>
+
+          <div style="margin-bottom: 18px;">
+            <label style="display: block; font-size: 13px; font-weight: 600; color: #475569; margin-bottom: 5px;">Rincian Pengaduan</label>
+            <textarea id="inputPesan" rows="3" required placeholder="Tuliskan kendala secara jelas..." style="width: 100%; padding: 10px; border: 1px solid #cbd5e1; border-radius: 8px; font-size: 14px; box-sizing: border-box; outline: none; resize: vertical;"></textarea>
+          </div>
+
+          <button type="submit" style="width: 100%; background: #2563eb; color: #fff; padding: 12px; border: none; border-radius: 8px; font-size: 15px; font-weight: 600; cursor: pointer; transition: 0.2s;">
+            Publikasikan Laporan
+          </button>
+        </form>
+      </div>
+
+      <!-- KOTAK PAPAN PENGADUAN WARGA -->
+      <div style="background: #ffffff; padding: 25px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); border: 1px solid #e2e8f0;">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; border-bottom: 2px solid #10b981; padding-bottom: 8px;">
+          <h3 style="font-size: 18px; color: #1e293b; margin: 0;">
+            📋 Papan Laporan Warga
+          </h3>
+          <span id="totalLaporan" style="font-size: 12px; background: #e0f2fe; color: #0284c7; padding: 3px 8px; border-radius: 12px; font-weight: bold;">0 Laporan</span>
+        </div>
+
+        <!-- Wadah List Laporan (Scrollable) -->
+        <div id="daftarPengaduan" style="display: flex; flex-direction: column; gap: 14px; max-height: 430px; overflow-y: auto; padding-right: 5px;">
+          <!-- Item aduan akan dirender di sini via JavaScript -->
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- SCRIPT PENGELOLA ADUAN (LOCALSTORAGE) -->
+<script>
+  // Data default awal agar papan aduan tidak kosong saat pertama dibuka
+  const dataAwal = [
+    {
+      id: "LAP-001",
+      nama: "Pak Hendra",
+      blok: "Blok A No. 12",
+      kategori: "Fasilitas Umum",
+      pesan: "Lampu penerangan jalan di pertigaan dekat pos satpam padam sejak 2 hari lalu.",
+      tanggal: "Baru saja",
+      status: "Diproses" // Status: Menunggu, Diproses, Selesai
+    },
+    {
+      id: "LAP-002",
+      nama: "Bu Ratna",
+      blok: "Blok C No. 05",
+      kategori: "Kebersihan & Sampah",
+      pesan: "Truk sampah belum datang melewati blok C pagi ini, tolong dicek.",
+      tanggal: "Kemarin",
+      status: "Selesai"
+    }
+  ];
+
+  // Ambil data dari LocalStorage jika ada, jika belum gunakan dataAwal
+  function getLaporan() {
+    const tersimpan = localStorage.getItem("aduan_bumi_asri");
+    if (!tersimpan) {
+      localStorage.setItem("aduan_bumi_asri", JSON.stringify(dataAwal));
+      return dataAwal;
+    }
+    return JSON.parse(tersimpan);
+  }
+
+  // Tampilkan daftar ke layar
+  function tampilkanLaporan() {
+    const daftar = getLaporan();
+    const container = document.getElementById("daftarPengaduan");
+    const totalBadge = document.getElementById("totalLaporan");
+
+    totalBadge.innerText = `${daftar.length} Laporan`;
+    container.innerHTML = "";
+
+    daftar.forEach(item => {
+      // Tentukan warna badge status
+      let badgeBg = "#fef3c7", badgeColor = "#b45309"; // Menunggu (Kuning)
+      if (item.status === "Diproses") {
+        badgeBg = "#dbeafe"; badgeColor = "#1d4ed8"; // Biru
+      } else if (item.status === "Selesai") {
+        badgeBg = "#dcfce7"; badgeColor = "#15803d"; // Hijau
+      }
+
+      const card = document.createElement("div");
+      card.style.cssText = "border: 1px solid #e2e8f0; border-radius: 8px; padding: 14px; background: #fafafa;";
+      card.innerHTML = `
+        <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 6px;">
+          <div>
+            <span style="font-size: 11px; font-weight: 700; color: #64748b;">${item.id}</span> •
+            <strong style="font-size: 14px; color: #1e293b;">${item.nama}</strong> 
+            <span style="font-size: 12px; color: #64748b;">(${item.blok})</span>
+          </div>
+          <span style="font-size: 11px; padding: 3px 8px; border-radius: 6px; font-weight: 600; background: ${badgeBg}; color: ${badgeColor};">
+            ${item.status}
+          </span>
+        </div>
+        
+        <div style="font-size: 12px; color: #2563eb; font-weight: 600; margin-bottom: 5px;">
+          📌 ${item.kategori}
+        </div>
+        
+        <p style="font-size: 13px; color: #334155; margin: 0 0 8px 0; line-height: 1.4;">
+          ${item.pesan}
+        </p>
+
+        <div style="font-size: 11px; color: #94a3b8; text-align: right;">
+          🕒 ${item.tanggal}
+        </div>
+      `;
+      container.appendChild(card);
+    });
+  }
+
+  // Tambah laporan baru saat form di-submit
+  function tambahLaporan(e) {
+    e.preventDefault();
+
+    const nama = document.getElementById("inputNama").value.trim();
+    const blok = document.getElementById("inputBlok").value.trim();
+    const kategori = document.getElementById("inputKategori").value;
+    const pesan = document.getElementById("inputPesan").value.trim();
+
+    const waktuSekarang = new Date().toLocaleDateString('id-ID', {
+      day: 'numeric',
+      month: 'short',
+      hour: '2-digit',
+      minute: '2-digit'
+    });
+
+    const list = getLaporan();
+    const newId = "LAP-" + String(list.length + 1).padStart(3, '0');
+
+    // Masukkan data baru ke paling atas
+    list.unshift({
+      id: newId,
+      nama: nama,
+      blok: blok,
+      kategori: kategori,
+      pesan: pesan,
+      tanggal: waktuSekarang,
+      status: "Menunggu"
+    });
+
+    localStorage.setItem("aduan_bumi_asri", JSON.stringify(list));
+    
+    // Reset Form & Render ulang
+    document.getElementById("formAduan").reset();
+    tampilkanLaporan();
+
+    alert("✅ Laporan Anda berhasil dipublikasikan ke papan pengaduan!");
+  }
+
+  // Jalankan saat web dibuka
+  tampilkanLaporan();
+</script>
+<!-- ================= END SECTION PENGADUAN ================= -->
 </body>
 </html>
